@@ -30,110 +30,7 @@ import {
 import _ from "lodash";
 
 
-const Styles = styled.div`
- 
-  padding: 0rem;
 
-  .table-wrapper{
-    min-height: 900px;
-  }
-
-  table {
-    table-layout: fixed;
-    border-spacing: 0;
-    //border: 0.5px solid;
-    //border-color: #dee2e6;
-
-    div {
-      font-size: 1rem;
-      padding: 0;
-      margin: 0;
-      border: 0;
-    }
-
-    td:nth-child(2) {
-      border: none;
-      border-bottom: 0.5px solid;
-      border-color: #dee2e6;
-    }
-
-    thead {
-      tr:nth-child(1) {
-        th {
-          div {
-            span {
-              color: #2c5eb1;
-              font-size: x-large;
-              text-align: right;
-            }
-          }
-        }
-      }
-
-
-      tr:nth-child(2) {
-        color: #2c5eb1;
-        font-size: large;
-        text-align: center;
-
-        th:nth-child(2) {
-          border-right: none;
-
-        }
-      }
-    }
-
-  }
-
-  tr > td:nth-of-type(2) > div {
-    font-weight: bold;
-  }
-
-
-  th,
-  td {
-    margin: 0;
-    padding: 0.5rem;
-    border-bottom: 0.5px solid;
-    border-right: 0.5px solid;
-    border-color: #dee2e6;
-    
-
-    input {
-      text-align: left;
-      direction: ltr;
-    }
-  }
-}
-
-.ok-button {
-  background: white;
-  margin: 2px
-}
-
-.cancel-button {
-  background: white;
-  margin: 2px;
-}
-
-td {
-  height: 80px;
-  text-align: center;
-  background: white;
-
-}
-
-th {
- 
-  color: #2c5eb1;
-}
-
-.pagination {
-  background-color: #f4f6f9;
-  padding: 0.5rem;
-  justify-content: center;
-  
-`
 
 
 //Create an editable cell renderer
@@ -161,10 +58,8 @@ const Cell = ({
             default:
                 if (original.isEditing) {
                     retObj = <>
-                        <button className="cancel-button" onClick={() => handleClickCancelEditRow(data, value)}><i
-                            className="close icon red"></i></button>
-                        <button className="ok-button" onClick={() => {handleClickSaveEditRow(data, index, id, value)}}><i
-                            className="check icon green"></i></button>
+                        <button className="cancel-button" onClick={() => handleClickCancelEditRow(data, value)}></button>
+                        <button className="ok-button" onClick={() => {handleClickSaveEditRow(data, index, id, value)}}></button>
                     </>;
                 } else {
 
@@ -1124,7 +1019,6 @@ const ReactTable = (props) => {
 
 
     return (
-        <Styles>
             <Table
                 getPageSize={getPageSize}
                 columns={columns}
@@ -1163,7 +1057,6 @@ const ReactTable = (props) => {
                 setIsAddRowClicked={setIsAddRowClicked}
                 setIsEditClicked={setIsEditClicked}
             />
-        </Styles>
     )
 
 }

@@ -1707,6 +1707,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
   background: #292929;
+ // background:rgba(44, 94, 177, 0.9);
   font-size: 1.15em;
 }
 
@@ -1718,7 +1719,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   color: #b8b7ad;
-  padding: 0.8em;
+  padding-left: 0.3em;
 }
 
 /* Individual item */
@@ -1791,9 +1792,20 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .menu-item{
   color: #fff;
-  margin-top: 10px;
   text-decoration: none;
   font-size:large;
+  text-align: center;
+
+}
+.menu-letter{
+  padding-top: 0.7em;
+  color: wheat;
+  text-decoration: underline white;
+  font-size:large;
+  text-align: center;
+ margin-bottom: 20px;
+  margin-top: 20px;
+  text-underline-offset:8px;
 }
 
 .ui.secondary.menu{
@@ -1846,9 +1858,116 @@ a.logo {
     display: none !important;
   }
 
+/////table styles
+
+.table-wrapper{
+  min-height: 900px;
+}
+
+
+.cancel-button {
+  background: url(../../../assets/images/icon/danger.svg) no-repeat center center;
+  height: 40px;
+  width: 20px;
+  margin-right: 10px;
+  border: 1px solid transparent;
+}
+
+.ok-button{
+  background: url(../../../assets/images/icon/success.svg)  no-repeat center center;
+  height: 40px;
+  width: 20px;
+  margin-right: 10px;
+  border: 1px solid transparent;
+}
 
 
 
+table {
+  table-layout: fixed;
+  border-spacing: 0;
+  //border: 0.5px solid;
+  //border-color: #dee2e6;
+
+  div {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  td:nth-child(2) {
+    border: none;
+    border-bottom: 0.5px solid;
+    border-color: #dee2e6;
+  }
+
+  thead {
+    tr:nth-child(1) {
+      th {
+        div {
+          span {
+            color: #2c5eb1;
+            font-size: x-large;
+            text-align: right;
+          }
+        }
+      }
+    }
+
+
+    tr:nth-child(2) {
+      color: #2c5eb1;
+      font-size: large;
+      text-align: center;
+
+      th:nth-child(2) {
+        border-right: none;
+
+      }
+    }
+  }
+
+}
+
+tr > td:nth-of-type(2) > div {
+  font-weight: bold;
+}
+
+
+th,
+td {
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 0.5px solid;
+  border-right: 0.5px solid;
+  border-color: #dee2e6;
+
+
+  input {
+    text-align: left;
+    direction: ltr;
+  }
+}
+
+
+
+td {
+  height: 80px;
+  text-align: center;
+
+}
+
+th {
+
+  color: #2c5eb1;
+}
+
+.pagination {
+  background-color: #f4f6f9;
+  padding: 0.5rem;
+  justify-content: center;
+}
 
 
 

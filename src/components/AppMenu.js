@@ -14,7 +14,15 @@ class AppMenu extends React.Component {
         this.state = {isOpen: false};
     }
 
+ArrangeAppsAlphabetically() {
 
+        let appsArrayObject = {A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K : [], L : [], M: [], N : [], O : [], P : [], Q : [], R :[] , S : [], T : [], U : [], V : [], W : [], X : [], Y : [], Z : []};
+    for(let i = 0 ; i < this.props.applications.length; i++) {
+         const firstLetterOfApp = this.props.applications[i].Name.charAt(0);
+       appsArrayObject[firstLetterOfApp].push(this.props.applications[i].Name);
+    }
+    return appsArrayObject
+}
 
  componentDidMount() {
 
@@ -47,19 +55,47 @@ class AppMenu extends React.Component {
         // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
         let links =[];
         if(this.props.applications.length != 0) {
-            for(let i = 0 ; i < this.props.applications.length; i++){
-                links.push( <Link
-                    key={i}
-                    to={`/Log/${this.props.applications[i].Name}`}
-                    id="home" className="menu-item"
-                    onClick={(e)=> {
-                        this.props.selectApplication(this.props.applications[i].Name)
-                         // setTimeout(() => {  window.location.replace(`/Log/${this.props.applications[i].Name}`); }, 2000);
-                       }
-                    }>
-                    {this.props.applications[i].Name}
-                </Link>);
+            let appsObject = this.ArrangeAppsAlphabetically();
+            let keys = Object.keys(appsObject)
+            for(let i = 0 ; i < keys.length ; i++) {
+                if(appsObject[keys[i]].length != 0){
+                    links.push(
+                        <u className="menu-letter"> &nbsp;&nbsp;&nbsp;&nbsp;{keys[i]}&nbsp; &nbsp;&nbsp;&nbsp;</u>
+
+                    )
+                    const arr = appsObject[keys[i]];
+                    for(let j = 0; j < appsObject[keys[i]].length; j ++){
+                        links.push( <Link
+                                key={j}
+                                to={`/Log/${arr[j]}`}
+                                id="home" className="menu-item"
+                                onClick={(e)=> {
+                                    this.props.selectApplication(arr[j])
+                                    // setTimeout(() => {  window.location.replace(`/Log/${this.props.applications[i].Name}`); }, 2000);
+                                }
+                                }>
+                                {arr[j]}
+                            </Link>,
+                        );
+                    }
+                }
+
             }
+
+            // for(let i = 0 ; i < this.props.applications.length; i++){
+            //     links.push( <Link
+            //         key={i}
+            //         to={`/Log/${this.props.applications[i].Name}`}
+            //         id="home" className="menu-item"
+            //         onClick={(e)=> {
+            //             this.props.selectApplication(this.props.applications[i].Name)
+            //              // setTimeout(() => {  window.location.replace(`/Log/${this.props.applications[i].Name}`); }, 2000);
+            //            }
+            //         }>
+            //         {this.props.applications[i].Name}
+            //     </Link>,
+            //     );
+            // }
 
             return (
 
