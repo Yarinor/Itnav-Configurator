@@ -5,6 +5,8 @@ import {
   selectApplication
 } from "../actions";
 import {Link} from "react-router-dom";
+import CustomScroll from "react-custom-scroll";
+
 
 class AppMenu extends React.Component {
 
@@ -98,12 +100,14 @@ ArrangeAppsAlphabetically() {
             // }
 
             return (
-
-                        <div className='menu-outer-container'>
+                    <div className='menu-outer-container'>
                         <Menu onOpen={ ()=> this.handleOnOpen() } onClose={ () => this.handleOnClose() } isOpen={this.state.isOpen} >
                             {links}
                         </Menu>
-                        </div>
+                    </div>
+
+
+
 
 
             );

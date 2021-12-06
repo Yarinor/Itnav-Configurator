@@ -15,6 +15,7 @@ import {
 } from "../actions"
 import {DELETE, SAVE, SAVE_LOG_RECORDS_SET} from "../actions/types";
 import {connect} from "react-redux";
+
 import {value} from "lodash/seq";
 import {
     ACTIONS_STACK,
@@ -1019,6 +1020,7 @@ const ReactTable = (props) => {
 
 
     return (
+
             <Table
                 getPageSize={getPageSize}
                 columns={columns}
@@ -1057,6 +1059,7 @@ const ReactTable = (props) => {
                 setIsAddRowClicked={setIsAddRowClicked}
                 setIsEditClicked={setIsEditClicked}
             />
+
     )
 
 }

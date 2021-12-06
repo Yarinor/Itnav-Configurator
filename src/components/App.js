@@ -17,6 +17,10 @@ import AWConfigTable from "./AWConfigTable";
 import AppMenu from "./AppMenu";
 
 
+
+
+
+
 class App extends React.Component {
 
 
@@ -121,10 +125,11 @@ class App extends React.Component {
 
     render() {
         return (
+
             <div>
                 <div className='app-wrapper'>
                     <BrowserRouter>
-                        <AppMenu  applications={this.props.applications}/>
+                            <AppMenu  applications={this.props.applications}/>
                         <div className='page-wrapper'>
                             <Header className='header'/>
                             <Switch>
