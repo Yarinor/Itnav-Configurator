@@ -1,9 +1,10 @@
 import DropdownAction from "./DropDownAction";
 import {DropdownItem} from "reactstrap";
+import Modal from "./Modal";
 import React from "react";
 
 const DisplayRowDropDownAction = (props) => {
-    const performDeleteAction = () =>{
+    const performDeleteAction = (e) =>{
         let newStack
         props.stack.push(props.data);
         newStack = props.stack;
@@ -19,11 +20,9 @@ const DisplayRowDropDownAction = (props) => {
         headerIcon="blueDots"
         header="Row Actions"
       >
-        {/* Edit record */}
         <DropdownItem onClick={props.handleClickEditRow} >
           <i className="pl-3 fas fa-edit" ></i>
           {" Edit Row "}    </DropdownItem>
-        {/* Delete record */}
         <DropdownItem onClick={performDeleteAction}>
           <i className="pl-3 far fa-trash-alt" style={{ color: "red" }}></i>
           {" Delete Row "}

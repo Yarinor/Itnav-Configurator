@@ -29,6 +29,7 @@ import {
     STACK
 } from "./types";
 import _ from "lodash";
+import Modal from "./Modal";
 
 
 
@@ -45,6 +46,8 @@ const Cell = ({
                   handleClickSaveEditRow,// This is a custom function that we supplied to our table instance
                   handleClickDeleteRow,// This is a custom function that we supplied to our table instance
                   setIsStackUpdate,
+                  openDeleteModal,
+                  setRowIndex,
                   setStack,
                   stack,
                   data
@@ -67,7 +70,11 @@ const Cell = ({
                     retObj = <div className="d-inline-block">
                         <DisplayRowDropDownAction
                             handleClickEditRow={() => handleClickEditRow(index, data)}
-                            handleClickDeleteRow={() => handleClickDeleteRow(index, data)}
+                            handleClickDeleteRow={() =>{
+                                setRowIndex(index);
+                                openDeleteModal(index,data)
+                            }
+                            }
                             setIsStackUpdate={setIsStackUpdate}
                             stack={stack}
                             setStack={setStack}
@@ -211,7 +218,9 @@ function Table(
         setIsCancelClicked,
         setIsFirstUndo,
         setLastPageVisited,
-        lastPageVisited
+        setRowIndex,
+        lastPageVisited,
+        openDeleteModal
 
     }
 ) {
@@ -278,7 +287,9 @@ function Table(
             undoChange,
             setIsFirstUndo,
             setLastPageVisited,
+            setRowIndex,
             updateToStateObject,
+            openDeleteModal,
         },
         usePagination
     )
@@ -518,6 +529,7 @@ const ReactTable = (props) => {
     //const [data, setData] = React.useState(props.tableRows)
     const [originalData] = React.useState(props.originalData)
     const [data, setData] = React.useState(getInitRecordSet())
+    const [rowIndex,setRowIndex] = React.useState(null);
     //const [data, setData] = React.useState(props.tableRows)
 
 
@@ -533,6 +545,7 @@ const ReactTable = (props) => {
     const [isPageCountChanged, setIsPageCountChanged] = React.useState(false)
     const [isStackUpdate, setIsStackUpdate] = React.useState(false)
     const [isFirstUndo, setIsFirstUndo] = React.useState(false)
+    const[isDeleteModalOpen,setIsDeleteModalOpen] = React.useState(false);
 
 
     const [lastPageVisited, setLastPageVisited] = React.useState(props.lastPageVisited);
@@ -674,8 +687,6 @@ const ReactTable = (props) => {
     }
 
 
-
-
     // This is the event handler we pass to our table in order for us to control what our edit button does
     const handleClickEditRow = (rowIndex, data, rowAddedFlag) => {
 
@@ -704,6 +715,7 @@ const ReactTable = (props) => {
 
     const handleClickDeleteRow = (rowIndex, data) => {
 
+
         let newData = [...data];
         let element = newData.splice(rowIndex, 1);
 
@@ -731,6 +743,11 @@ const ReactTable = (props) => {
         setData(newData);
         updateToState(element, DELETE);
         setIsDeleteClicked(true);
+
+    }
+
+    const openDeleteModal = (rowIndex,data)=>{
+        setIsDeleteModalOpen(true);
 
     }
     const handleClickSaveEditRow = (data, rowIndex, id, value, isSavedClicked) => {
@@ -882,7 +899,21 @@ const ReactTable = (props) => {
         setIsAddRowClicked(true);
 
     }
-
+    const renderButtonModalActions = () =>{
+        return(
+            <div className="actions">
+                <button className="ui primary button" onClick={()=>{
+                    handleClickDeleteRow(rowIndex,data)
+                    setIsDeleteModalOpen(false);
+                }
+                }>Delete</button>
+                <button className="ui button" onClick={()=>{
+                    setIsDeleteModalOpen(false);
+                }
+                }>Cancel</button>
+            </div>
+        )
+    }
 
 
     // We need to keep the table from resetting the pageIndex when we
@@ -1020,7 +1051,17 @@ const ReactTable = (props) => {
 
 
     return (
+        <div>
+            <Modal show={isDeleteModalOpen}
+                   rowIndex={rowIndex}
+                   data={data}
+                   handleClickDeleteRow={handleClickDeleteRow}
+                   setIsDeleteModalOpen={setIsDeleteModalOpen}
+                   title={"Delete Record"}
+                   content={"Are you sure you want to delete this record?"}
+                   actions={renderButtonModalActions}
 
+            />
             <Table
                 getPageSize={getPageSize}
                 columns={columns}
@@ -1058,10 +1099,13 @@ const ReactTable = (props) => {
                 isAddRowClicked={isAddRowClicked}
                 setIsAddRowClicked={setIsAddRowClicked}
                 setIsEditClicked={setIsEditClicked}
+                setRowIndex={setRowIndex}
+                openDeleteModal={openDeleteModal}
             />
 
-    )
+        </div>
 
+    )
 }
 
 

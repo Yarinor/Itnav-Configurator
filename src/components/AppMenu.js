@@ -62,7 +62,7 @@ ArrangeAppsAlphabetically() {
             for(let i = 0 ; i < keys.length ; i++) {
                 if(appsObject[keys[i]].length != 0){
                     links.push(
-                        <u className="menu-letter"> &nbsp;&nbsp;&nbsp;&nbsp;{keys[i]}&nbsp; &nbsp;&nbsp;&nbsp;</u>
+                        <u key={i} className="menu-letter"> &nbsp;&nbsp;&nbsp;&nbsp;{keys[i]}&nbsp; &nbsp;&nbsp;&nbsp;</u>
 
                     )
                     const arr = appsObject[keys[i]];
@@ -73,7 +73,6 @@ ArrangeAppsAlphabetically() {
                                 id="home" className="menu-item"
                                 onClick={(e)=> {
                                     this.props.selectApplication(arr[j])
-                                    // setTimeout(() => {  window.location.replace(`/Log/${this.props.applications[i].Name}`); }, 2000);
                                 }
                                 }>
                                 {arr[j]}

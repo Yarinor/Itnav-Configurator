@@ -15,6 +15,8 @@ import CSTable from "./CSTable";
 import LogTable from "./LogTable";
 import AWConfigTable from "./AWConfigTable";
 import AppMenu from "./AppMenu";
+import Modal from "./Modal";
+import RecordDelete from "./Pages/RecordDelete";
 
 
 
@@ -127,12 +129,16 @@ class App extends React.Component {
         return (
 
             <div>
+
                 <div className='app-wrapper'>
+                    <Modal show={false}/>
                     <BrowserRouter>
                             <AppMenu  applications={this.props.applications}/>
                         <div className='page-wrapper'>
                             <Header className='header'/>
                             <Switch>
+                                {/*<Route path='/records/delete' render={(props) => <RecordDelete*/}
+                                {/*    />}/>*/}
                                 <Route path='/Log/:appName' render={(props) => <LogTable
                                     {...props}
                                     columns={columns}
