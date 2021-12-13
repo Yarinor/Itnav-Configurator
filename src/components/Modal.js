@@ -3,17 +3,37 @@ import ReactDOM from "react-dom";
 
 
 const Modal = props =>{
+    const updateInput =(e) =>{
+        props.getInputValue(e.target.value)
+
+    }
+
+    const renderContent = (props)=>{
+        if(props.isInputContent){
+            return (
+                <div>
+                    {props.content}
+                    &nbsp;&nbsp;
+                        <input id='modalInputField' class="form-control" type="text" onChange={updateInput} />
+
+                </div>
+            )
+        }
+        else{
+            return props.content
+        }
+    }
 
     if(props.show === true){
         return ReactDOM.createPortal(
-            <div onClick={()=>props.setIsDeleteModalOpen(false)} className="ui dimmer modals visible active">
+            <div onClick={()=>props.onDismiss()} className="ui dimmer modals visible active">
                 <div onClick={(e)=> e.stopPropagation()} className="ui modal visible active">
                     <div className="header">{props.title}</div>
                     <div className="content">
-                         {props.content}
+                        {renderContent(props)}
                     </div>
                     <div className="actions">
-                        {props.actions()}
+                        {props.actions}
                     </div>
                 </div>
             </div>,

@@ -931,7 +931,7 @@ const ReactTable = (props) => {
     const renderButtonModalActions = () =>{
         return(
             <div className="actions">
-                <button className="ui primary button" onClick={()=>{
+                <button className="ui delete button" onClick={()=>{
                     handleClickDeleteRow(rowIndex,data)
                     setIsDeleteModalOpen(false);
                 }
@@ -1082,13 +1082,11 @@ const ReactTable = (props) => {
     return (
         <div>
             <Modal show={isDeleteModalOpen}
-                   rowIndex={rowIndex}
-                   data={data}
-                   handleClickDeleteRow={handleClickDeleteRow}
-                   setIsDeleteModalOpen={setIsDeleteModalOpen}
+                   onDismiss={()=>setIsDeleteModalOpen(false)}
                    title={"Delete Record"}
                    content={"Are you sure you want to delete this record?"}
-                   actions={renderButtonModalActions}
+                   actions={renderButtonModalActions()}
+                   isInputContent={false}
 
             />
             <Table

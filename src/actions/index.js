@@ -14,7 +14,7 @@ import {
     UPDATE_AW_CONFIG_STATE_OBJECT,
     FETCH_CS_RECORDS,
     FETCH_AW_CONFIG_RECORDS,
-    FETCH_APPLICATIONS, SELECT_APPLICATION
+    FETCH_APPLICATIONS, SELECT_APPLICATION, ADD_APPLICATION
 
 } from "./types";
 import _ from "lodash";
@@ -25,6 +25,14 @@ export const fetchApplications = () => async (dispatch,getState) => {
     dispatch({type: FETCH_APPLICATIONS, payload: JSON.parse(response.data)})
 
 }
+
+export const addApplication = application => {
+    return {
+        type: ADD_APPLICATION,
+        payload: application
+    }
+}
+
 
 export const selectApplication = application => {
     return {

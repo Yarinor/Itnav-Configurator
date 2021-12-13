@@ -126,74 +126,80 @@ class App extends React.Component {
 
 
     render() {
-        return (
+        if(this.props.applications.length !=0){
+            return (
+                <div>
 
-            <div>
-
-                <div className='app-wrapper'>
-                    <Modal show={false}/>
-                    <BrowserRouter>
-                            <AppMenu  applications={this.props.applications}/>
-                        <div className='page-wrapper'>
-                            <Header className='header'/>
-                            <Switch>
-                                {/*<Route path='/records/delete' render={(props) => <RecordDelete*/}
-                                {/*    />}/>*/}
-                                <Route path='/Log/:appName' render={(props) => <LogTable
-                                    {...props}
-                                    columns={columns}
-                                    records={this.props.logRecordsSet}
-                                    deletedItems={this.props.logStateObject.deletedItems}
-                                    addedItemsIds={this.props.logStateObject.addedItemsIds}
-                                    editedItemsIds={this.props.logStateObject.editedItemsIds}
-                                    stack={this.props.logStateObject.stack}
-                                    addedItemsIdsStack={this.props.logStateObject.addedItemsIdsStack}
-                                    editedItemsIdsStack={this.props.logStateObject.editedItemsIdsStack}
-                                    itemsDeletedStack={this.props.logStateObject.itemsDeletedStack}
-                                    actionsStack={this.props.logStateObject.actionsStack}
-                                    lastPageVisited={this.props.logStateObject.lastPageVisited}
-                                    originalData={this.props.logRecords}
-                                />}/>
-                                <Route path='/ConnectionString/:appName' render={(props) => <CSTable {...props}
-
-                                                                                                     columns={columns}
-                                                                                                     records={this.props.csRecordsSet}
-                                                                                                     deletedItems={this.props.csStateObject.deletedItems}
-                                                                                                     addedItemsIds={this.props.csStateObject.addedItemsIds}
-                                                                                                     editedItemsIds={this.props.csStateObject.editedItemsIds}
-                                                                                                     stack={this.props.csStateObject.stack}
-                                                                                                     addedItemsIdsStack={this.props.csStateObject.addedItemsIdsStack}
-                                                                                                     editedItemsIdsStack={this.props.csStateObject.editedItemsIdsStack}
-                                                                                                     itemsDeletedStack={this.props.csStateObject.itemsDeletedStack}
-                                                                                                     actionsStack={this.props.csStateObject.actionsStack}
-                                                                                                     lastPageVisited={this.props.csStateObject.lastPageVisited}
-                                                                                                     originalData={this.props.csRecords}
-                                />}/>
-                                <Route path='/AppOrWebConfig/:appName' render={(props) => <AWConfigTable {...props}
+                    <div className='app-wrapper'>
+                        <Modal show={false}/>
+                        <BrowserRouter>
+                            {/*applications={this.props.applications}*/}
+                            <AppMenu />
+                            <div className='page-wrapper'>
+                                <Header className='header'/>
+                                <Switch>
+                                    {/*<Route path='/records/delete' render={(props) => <RecordDelete*/}
+                                    {/*    />}/>*/}
+                                    <Route path='/Log/:appName' render={(props) => <LogTable
+                                        {...props}
+                                        columns={columns}
+                                        records={this.props.logRecordsSet}
+                                        deletedItems={this.props.logStateObject.deletedItems}
+                                        addedItemsIds={this.props.logStateObject.addedItemsIds}
+                                        editedItemsIds={this.props.logStateObject.editedItemsIds}
+                                        stack={this.props.logStateObject.stack}
+                                        addedItemsIdsStack={this.props.logStateObject.addedItemsIdsStack}
+                                        editedItemsIdsStack={this.props.logStateObject.editedItemsIdsStack}
+                                        itemsDeletedStack={this.props.logStateObject.itemsDeletedStack}
+                                        actionsStack={this.props.logStateObject.actionsStack}
+                                        lastPageVisited={this.props.logStateObject.lastPageVisited}
+                                        originalData={this.props.logRecords}
+                                    />}/>
+                                    <Route path='/ConnectionString/:appName' render={(props) => <CSTable {...props}
 
                                                                                                          columns={columns}
-                                                                                                         records={this.props.awConfigRecordsSet}
-                                                                                                         deletedItems={this.props.awConfigStateObject.deletedItems}
-                                                                                                         addedItemsIds={this.props.awConfigStateObject.addedItemsIds}
-                                                                                                         editedItemsIds={this.props.awConfigStateObject.editedItemsIds}
-                                                                                                         stack={this.props.awConfigStateObject.stack}
-                                                                                                         addedItemsIdsStack={this.props.awConfigStateObject.addedItemsIdsStack}
-                                                                                                         editedItemsIdsStack={this.props.awConfigStateObject.editedItemsIdsStack}
-                                                                                                         itemsDeletedStack={this.props.awConfigStateObject.itemsDeletedStack}
-                                                                                                         actionsStack={this.props.awConfigStateObject.actionsStack}
-                                                                                                         lastPageVisited={this.props.awConfigStateObject.lastPageVisited}
-                                                                                                         originalData={this.props.awConfigRecords}
-                                />}/>
-                            </Switch>
-                            <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
-                            </button>
-                        </div>
-                    </BrowserRouter>
+                                                                                                         records={this.props.csRecordsSet}
+                                                                                                         deletedItems={this.props.csStateObject.deletedItems}
+                                                                                                         addedItemsIds={this.props.csStateObject.addedItemsIds}
+                                                                                                         editedItemsIds={this.props.csStateObject.editedItemsIds}
+                                                                                                         stack={this.props.csStateObject.stack}
+                                                                                                         addedItemsIdsStack={this.props.csStateObject.addedItemsIdsStack}
+                                                                                                         editedItemsIdsStack={this.props.csStateObject.editedItemsIdsStack}
+                                                                                                         itemsDeletedStack={this.props.csStateObject.itemsDeletedStack}
+                                                                                                         actionsStack={this.props.csStateObject.actionsStack}
+                                                                                                         lastPageVisited={this.props.csStateObject.lastPageVisited}
+                                                                                                         originalData={this.props.csRecords}
+                                    />}/>
+                                    <Route path='/AppOrWebConfig/:appName' render={(props) => <AWConfigTable {...props}
 
+                                                                                                             columns={columns}
+                                                                                                             records={this.props.awConfigRecordsSet}
+                                                                                                             deletedItems={this.props.awConfigStateObject.deletedItems}
+                                                                                                             addedItemsIds={this.props.awConfigStateObject.addedItemsIds}
+                                                                                                             editedItemsIds={this.props.awConfigStateObject.editedItemsIds}
+                                                                                                             stack={this.props.awConfigStateObject.stack}
+                                                                                                             addedItemsIdsStack={this.props.awConfigStateObject.addedItemsIdsStack}
+                                                                                                             editedItemsIdsStack={this.props.awConfigStateObject.editedItemsIdsStack}
+                                                                                                             itemsDeletedStack={this.props.awConfigStateObject.itemsDeletedStack}
+                                                                                                             actionsStack={this.props.awConfigStateObject.actionsStack}
+                                                                                                             lastPageVisited={this.props.awConfigStateObject.lastPageVisited}
+                                                                                                             originalData={this.props.awConfigRecords}
+                                    />}/>
+                                </Switch>
+                                <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
+                                </button>
+                            </div>
+                        </BrowserRouter>
+
+                    </div>
                 </div>
-            </div>
 
-        )
+            )
+        }
+        else{
+            return <div>Loading...</div>
+        }
+
     }
 
 

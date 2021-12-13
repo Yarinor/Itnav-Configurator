@@ -2467,11 +2467,12 @@ th {
   color: #fff;
   text-shadow: none;
   background-image: none;
+  min-width: 17%;
 }
 .ui.button, .ui.buttons .button, .ui.buttons .or {
   font-size: 1rem;
 }
-.ui.primary.button, .ui.primary.buttons .button {
+.ui.delete.button, .ui.delete.buttons .button {
   background-color: #f60000;
   color: #fff;
   text-shadow: none;
@@ -2516,4 +2517,17 @@ button, input {
   transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
   transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease,-webkit-box-shadow .1s ease;
   -webkit-tap-highlight-color: transparent;
+}
+.side-menu-add-button{
+  background-color: transparent;
+  color:wheat;
+  border: 1px solid transparent;
+}
+
+.actions{
+  align-content: stretch;
+  text-align: center;
+}
+.modal.field{
+
 }
