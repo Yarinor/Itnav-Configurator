@@ -857,46 +857,75 @@ const ReactTable = (props) => {
         actionsStack.push('1');
         setActionStack(actionsStack);
         updateToStateObject(ACTIONS_STACK, actionsStack)
-        addedItemsIds.push(data[data.length - 1].Id + 1)
-        setAddedItemsIds(addedItemsIds);
-        updateToStateObject(ADDED_ITEMS_IDS, addedItemsIds)
-        addedItemsIdsStack.push(data[data.length - 1].Id + 1);
-        setAddedItemsIdsStack(addedItemsIdsStack);
-        updateToStateObject(ADDED_ITEMS_IDS_STACK, addedItemsIdsStack)
-        const newData = data.concat
-        ({
-            Sign: 1,
-            Id: data[data.length - 1].Id + 1,
-            Application: data[data.length - 1].Application,
-            Section: "",
-            Subsection: "",
-            ConfigKey: "",
-            ConfigValue: "",
-            ConfigType: "",
-            PossibleValues: "",
-            Description: "",
-            editButton: "edit",
-            isEditing: false
-        })
-        const arrLastIndex = data.length;
-        setIsStackUpdate(true);
-        setData(newData);
-        updateToState(newData, SAVE)
-        if (pageSizeFromChild <= newData.length && (newData.length - 1) % 10 === 0) {
-            setIsPageCountChanged(true);
-            handleClickEditRow(arrLastIndex, newData, 1);
-        } else {
-            handleClickEditRow(arrLastIndex, newData, 1);
-            window.scrollTo({
-                top: document.documentElement.scrollHeight,
-                behavior: 'auto'
-                /* you can also use 'auto' behaviour
-                   in place of 'smooth' */
+        if(data.length !=0){
+            addedItemsIds.push(data[data.length - 1].Id + 1)
+            setAddedItemsIds(addedItemsIds);
+            updateToStateObject(ADDED_ITEMS_IDS, addedItemsIds)
+            addedItemsIdsStack.push(data[data.length - 1].Id + 1);
+            setAddedItemsIdsStack(addedItemsIdsStack);
+            updateToStateObject(ADDED_ITEMS_IDS_STACK, addedItemsIdsStack)
+            const newData = data.concat
+            ({
+                Sign: 1,
+                Id: data[data.length - 1].Id + 1,
+                Application: data[data.length - 1].Application,
+                Section: "",
+                Subsection: "",
+                ConfigKey: "",
+                ConfigValue: "",
+                ConfigType: "",
+                PossibleValues: "",
+                Description: "",
+                editButton: "edit",
+                isEditing: false
+            })
+            const arrLastIndex = data.length;
+            setIsStackUpdate(true);
+            setData(newData);
+            updateToState(newData, SAVE)
+            if (pageSizeFromChild <= newData.length && (newData.length - 1) % 10 === 0) {
+                setIsPageCountChanged(true);
+                handleClickEditRow(arrLastIndex, newData, 1);
+            } else {
+                handleClickEditRow(arrLastIndex, newData, 1);
+                window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'auto'
+                    /* you can also use 'auto' behaviour
+                       in place of 'smooth' */
 
-            });
+                });
+            }
+
+            setIsAddRowClicked(true);
         }
-
-        setIsAddRowClicked(true);
+        else {
+            const newData = data.concat
+            ({
+                Sign: 1,
+                Id: 0,
+                Application: appName,
+                Section: "",
+                Subsection: "",
+                ConfigKey: "",
+                ConfigValue: "",
+                ConfigType: "",
+                PossibleValues: "",
+                Description: "",
+                editButton: "edit",
+                isEditing: false
+            })
+            const arrLastIndex = data.length;
+            setIsStackUpdate(true);
+            setData(newData);
+            updateToState(newData, SAVE)
+            addedItemsIds.push(0)
+            setAddedItemsIds(addedItemsIds);
+            updateToStateObject(ADDED_ITEMS_IDS, addedItemsIds)
+            addedItemsIdsStack.push(0);
+            setAddedItemsIdsStack(addedItemsIdsStack);
+            updateToStateObject(ADDED_ITEMS_IDS_STACK, addedItemsIdsStack)
+        }
 
     }
     const renderButtonModalActions = () =>{

@@ -73,6 +73,7 @@ ArrangeAppsAlphabetically() {
                                 id="home" className="menu-item"
                                 onClick={(e)=> {
                                     this.props.selectApplication(arr[j])
+                                    this.handleOnClose();
                                 }
                                 }>
                                 {arr[j]}
@@ -83,20 +84,6 @@ ArrangeAppsAlphabetically() {
 
             }
 
-            // for(let i = 0 ; i < this.props.applications.length; i++){
-            //     links.push( <Link
-            //         key={i}
-            //         to={`/Log/${this.props.applications[i].Name}`}
-            //         id="home" className="menu-item"
-            //         onClick={(e)=> {
-            //             this.props.selectApplication(this.props.applications[i].Name)
-            //              // setTimeout(() => {  window.location.replace(`/Log/${this.props.applications[i].Name}`); }, 2000);
-            //            }
-            //         }>
-            //         {this.props.applications[i].Name}
-            //     </Link>,
-            //     );
-            // }
 
             return (
                     <div className='menu-outer-container'>
@@ -104,10 +91,6 @@ ArrangeAppsAlphabetically() {
                             {links}
                         </Menu>
                     </div>
-
-
-
-
 
             );
         }
