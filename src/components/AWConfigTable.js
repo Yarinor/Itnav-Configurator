@@ -12,7 +12,6 @@ class AWConfigTable extends React.Component {
             <div>
 
                 <ReactTable
-                            selectedApplication={this.props.selectedApplication}
                             tableColumns={this.props.columns}
                             tableName={'AW_CONFIG'}
                             deletedItems={this.props.deletedItems}

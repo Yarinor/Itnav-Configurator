@@ -14,7 +14,6 @@ class CSTable extends React.Component {
             <div>
 
                 <ReactTable
-                            selectedApplication={this.props.selectedApplication}
                             tableColumns={this.props.columns}
                             tableName={'CS'}
                             deletedItems={this.props.deletedItems}

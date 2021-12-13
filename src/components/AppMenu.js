@@ -5,7 +5,6 @@ import {
     selectApplication, addApplication
 } from "../actions";
 import {Link} from "react-router-dom";
-import CustomScroll from "react-custom-scroll";
 import Modal from "./Modal";
 
 
@@ -19,7 +18,8 @@ class AppMenu extends React.Component {
         this.state = {
             isOpen: false,
             isAddAppModalOpen:false,
-            inputValue:''
+            inputValue:'',
+            searchValue:''
         };
     }
 
@@ -92,8 +92,6 @@ class AppMenu extends React.Component {
 
     render () {
         // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
-
-
         let links =[];
         if(this.props.applications.length != 0) {
 
@@ -101,25 +99,53 @@ class AppMenu extends React.Component {
             let keys = Object.keys(appsObject)
             for(let i = 0 ; i < keys.length ; i++) {
                 if(appsObject[keys[i]].length != 0){
-                    links.push(
-                        <u key={i} className="menu-letter"> &nbsp;&nbsp;&nbsp;&nbsp;{keys[i]}&nbsp; &nbsp;&nbsp;&nbsp;</u>
-
-                    )
                     const arr = appsObject[keys[i]];
-                    for(let j = 0; j < appsObject[keys[i]].length; j ++){
-                        links.push( <Link
-                                key={j}
-                                to={`/Log/${arr[j]}`}
-                                id="home" className="menu-item"
-                                onClick={(e)=> {
-                                    this.props.selectApplication(arr[j])
-                                    this.handleOnClose();
-                                }
-                                }>
-                                {arr[j]}
-                            </Link>,
-                        );
+                    if(this.state.searchValue != ''){
+                        links.push(<br/>);
+                        let regex =new RegExp(`^${this.state.searchValue}`,'i')
+                        for(let j = 0; j < appsObject[keys[i]].length; j ++){
+                            let found = regex.test(arr[j])
+                            if(found){
+                                links.push( <Link
+                                        key={j}
+                                        to={`/Log/${arr[j]}`}
+                                        id="home" className="menu-item"
+                                        onClick={(e)=> {
+                                            this.props.selectApplication(arr[j])
+                                            this.handleOnClose();
+                                        }
+                                        }>
+                                        {arr[j]}
+                                    </Link>,
+                                );
+                            }
+                            else{
+                                links.push(<div>No results found</div>)
+                                break;
+                            }
+                        }
                     }
+                    else{
+                        links.push(
+                            <u key={i} className="menu-letter"> &nbsp;&nbsp;&nbsp;&nbsp;{keys[i]}&nbsp; &nbsp;&nbsp;&nbsp;</u>
+
+                        )
+                        for(let j = 0; j < appsObject[keys[i]].length; j ++){
+                            links.push( <Link
+                                    key={j}
+                                    to={`/Log/${arr[j]}`}
+                                    id="home" className="menu-item"
+                                    onClick={(e)=> {
+                                        this.props.selectApplication(arr[j])
+                                        this.handleOnClose();
+                                    }
+                                    }>
+                                    {arr[j]}
+                                </Link>,
+                            );
+                        }
+                    }
+
                 }
 
             }
@@ -148,6 +174,9 @@ class AppMenu extends React.Component {
                                    &nbsp;
                                    Add App
                                </button>
+                            <br/>
+                            <div className='d-inline-block'><i className='fas fa-search'></i> &nbsp;</div>
+                            <div className='d-inline-block'><input className='form-control' onChange={e=> this.setState({searchValue:e.target.value})}/></div>
                             {links}
                         </Menu>
                     </div>

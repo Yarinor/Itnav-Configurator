@@ -12,14 +12,12 @@ class LogTable extends React.Component {
 
 
     render() {
-        if(this.props.records.length !== 0){
-            const tableData = buildTableData(this.props.records);
+            // const tableData = buildTableData(this.props.records);
             return (
                 <div>
 
                     <ReactTable
-                                tableRows={tableData.rows}
-                                tableColumns={columns}
+                               tableColumns={this.props.columns}
                                 tableName={'Log'}
                                 deletedItems={this.props.deletedItems}
                                 addedItemsIds={this.props.addedItemsIds}
@@ -35,93 +33,85 @@ class LogTable extends React.Component {
                 </div>
             )
         }
-        else{
-            return(
-                <div>Loading...</div>
-                )
 
-        }
 
-        }
 }
 
 export default LogTable;
-
-const columns =
-    [
-        {
-            Header: 'Table Actions',
-            id:1,
-            columns:[
-                {
-                    Header: '',
-                    accessor: 'editButton',
-                    isEditable: false,
-                    width: "5%"
-
-                },
-                {
-                    Header: 'Application',
-                    accessor: 'Application',
-                    isEditable: false,
-                    width: "6%"
-
-                },
-                {
-                    Header: 'ConfigKey',
-                    accessor: 'ConfigKey',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'ConfigType',
-                    accessor: 'ConfigType',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'ConfigValue',
-                    accessor: 'ConfigValue',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'Description',
-                    accessor: 'Description',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'PossibleValues',
-                    accessor: 'PossibleValues',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'Section',
-                    accessor: 'Section',
-                    isEditable: true,
-                    width: "10%"
-                },
-                {
-                    Header: 'Subsection',
-                    accessor: 'Subsection',
-                    isEditable: true,
-                    width: "10%"
-                },
-
-            ]
-        }
-    ]
-
-const buildTableData = (records) => {
-    const rowsArr = Object.values(_.mapKeys(records, 'Id'));
-    let rows;
-    if (!rowsArr.isEmpty) {
-        rows = rowsArr.map(element => ({...element, editButton: 'edit', isEditing: false}));
-    }
-
-
+//
+// const columns =
+//     [
+//         {
+//             Header: 'Table Actions',
+//             id:1,
+//             columns:[
+//                 {
+//                     Header: '',
+//                     accessor: 'editButton',
+//                     isEditable: false,
+//                     width: "5%"
+//
+//                 },
+//                 {
+//                     Header: 'Application',
+//                     accessor: 'Application',
+//                     isEditable: false,
+//                     width: "6%"
+//
+//                 },
+//                 {
+//                     Header: 'ConfigKey',
+//                     accessor: 'ConfigKey',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'ConfigType',
+//                     accessor: 'ConfigType',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'ConfigValue',
+//                     accessor: 'ConfigValue',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'Description',
+//                     accessor: 'Description',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'PossibleValues',
+//                     accessor: 'PossibleValues',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'Section',
+//                     accessor: 'Section',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//                 {
+//                     Header: 'Subsection',
+//                     accessor: 'Subsection',
+//                     isEditable: true,
+//                     width: "10%"
+//                 },
+//
+//             ]
+//         }
+//     ]
+//
+// const buildTableData = (records) => {
+//     const rowsArr = Object.values(_.mapKeys(records, 'Id'));
+//     let rows;
+//     if (!rowsArr.isEmpty) {
+//         rows = rowsArr.map(element => ({...element, editButton: 'edit', isEditing: false}));
+//     }
 
 
 
@@ -129,7 +119,9 @@ const buildTableData = (records) => {
 
 
 
-    return {rows, columns}
 
-}
+
+//     return {rows, columns}
+//
+// }
 
