@@ -30,6 +30,8 @@ import {
 } from "./types";
 import _ from "lodash";
 import Modal from "./Modal";
+import {useParams} from "react-router-dom";
+import history from "../history";
 
 
 
@@ -483,11 +485,12 @@ function Table(
 }
 
 const ReactTable = (props) => {
-
+    console.log(props);
     const columns = React.useMemo(
         () => props.tableColumns,
         []
     )
+    //const columns =props.tableColumns;
     // const rows = React.useMemo(
     //     () => props.tableRows,
     //     [props.appName]
@@ -495,6 +498,7 @@ const ReactTable = (props) => {
 
     // const columns =props.tableColumns;
     const appName = useSelector(state => state.selectedApplication);
+    //const { appName } = useParams();
     // const appName= this.props.appName
     const logRecords = useSelector(state => state.logRecords);
     const logRecordsSet = useSelector(state => state.logRecordsSet);
@@ -503,6 +507,7 @@ const ReactTable = (props) => {
     const awConfigRecords = useSelector(state => state.awConfigRecords);
     const awConfigRecordsSet = useSelector(state => state.awConfigRecordsSet);
     const tableName = props.tableName;
+
 
     const getInitRecordSet = () => {
         let data;
@@ -524,6 +529,24 @@ const ReactTable = (props) => {
 
         }
     }
+    // const buildHeaderOptions =()=>{
+    //     props.tableColumns[0].Header = (data) => {
+    //         return (
+    //             <div className="d-inline-block">
+    //                 <div className="d-inline-block">
+    //                     <DisplayTableDropDownAction
+    //                         addNewRow={() => addNewRow(data.data)}
+    //                         undoChange={() => undoChange(stack, data.data)}
+    //                     />
+    //                 </div>
+    //                 <div className="d-inline-block"><span>Table Actions</span></div>
+    //             </div>
+    //
+    //
+    //         )
+    //
+    //     }
+    // }
 
 
     //const [data, setData] = React.useState(props.tableRows)
@@ -535,7 +558,7 @@ const ReactTable = (props) => {
 
     const [skipPageReset, setSkipPageReset] = React.useState(false)
 
-
+    const [applicationName, setApplicationName] = React.useState(appName);
     const [isSavedClicked, setIsSavedClicked] = React.useState(false)
     const [isEditClicked, setIsEditClicked] = React.useState(false)
     const [isCancelClicked, setIsCancelClicked] = React.useState(false)
@@ -561,9 +584,10 @@ const ReactTable = (props) => {
     const [actionsStack, setActionStack] = React.useState(props.actionsStack)
 
     let pageSizeFromChild;
-
+;
 
     const dispatch = useDispatch()
+    //buildHeaderOptions();
 
 
     // console.log('===========================================================')
@@ -589,22 +613,22 @@ const ReactTable = (props) => {
     // console.log(itemsDeletedStack);
 
 
-    props.tableColumns[0].Header = (data) => {
-        return (
-            <div className="d-inline-block">
-                <div className="d-inline-block">
-                    <DisplayTableDropDownAction
-                        addNewRow={() => addNewRow(data.data)}
-                        undoChange={() => undoChange(stack, data.data)}
-                    />
-                </div>
-                <div className="d-inline-block"><span>Table Actions</span></div>
-            </div>
-
-
-        )
-
-    }
+    // props.tableColumns[0].Header = (data) => {
+    //     return (
+    //         <div className="d-inline-block">
+    //             <div className="d-inline-block">
+    //                 <DisplayTableDropDownAction
+    //                     addNewRow={() => addNewRow(data.data)}
+    //                     undoChange={() => undoChange(stack, data.data)}
+    //                 />
+    //             </div>
+    //             <div className="d-inline-block"><span>Table Actions</span></div>
+    //         </div>
+    //
+    //
+    //     )
+    //
+    // }
 
 
     const updateToStateObject = (key, value) => {
@@ -688,8 +712,7 @@ const ReactTable = (props) => {
 
 
     // This is the event handler we pass to our table in order for us to control what our edit button does
-    const handleClickEditRow = (rowIndex, data, rowAddedFlag) => {
-
+    const handleClickEditRow = (rowIndex, data, rowAddedFlag) => {;
         data = data.map((row, index) =>
             ({...row, isEditing: index === rowIndex})
         )
@@ -853,7 +876,8 @@ const ReactTable = (props) => {
         setIsUndoClicked(true)
     }
 
-    const addNewRow = (data) => {
+
+      const addNewRow = (data) => {
         actionsStack.push('1');
         setActionStack(actionsStack);
         updateToStateObject(ACTIONS_STACK, actionsStack)
@@ -1002,6 +1026,8 @@ const ReactTable = (props) => {
     }
 
 
+
+
     React.useEffect(() => {
         if (tableName === 'Log')
             if (compareArrays(logRecords, logRecordsSet) === true) {
@@ -1059,8 +1085,6 @@ const ReactTable = (props) => {
 
 
     React.useEffect(() => {
-
-
         window.addEventListener("beforeunload", (ev) => {
 
             ev.preventDefault();
@@ -1081,6 +1105,16 @@ const ReactTable = (props) => {
 
     return (
         <div>
+            <br/>
+            <div className="d-inline-block">
+                <div className="d-inline-block">
+                    <DisplayTableDropDownAction
+                        addNewRow={() => addNewRow(data)}
+                        undoChange={() => undoChange(stack,data)}
+                    />
+                </div>
+                <div className="d-inline-block"><span className='table-header'>Table Actions</span></div>
+            </div>
             <Modal show={isDeleteModalOpen}
                    onDismiss={()=>setIsDeleteModalOpen(false)}
                    title={"Delete Record"}

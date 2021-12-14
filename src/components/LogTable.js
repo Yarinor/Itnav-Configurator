@@ -17,6 +17,7 @@ class LogTable extends React.Component {
                 <div>
 
                     <ReactTable
+                                props={this.props.props}
                                tableColumns={this.props.columns}
                                 tableName={'Log'}
                                 deletedItems={this.props.deletedItems}

@@ -6,6 +6,7 @@ import {
 } from "../actions";
 import {Link} from "react-router-dom";
 import Modal from "./Modal";
+import history from "../history";
 
 
 
@@ -15,6 +16,7 @@ class AppMenu extends React.Component {
     constructor(props) {
         super(props);
         this.getInputValue = this.getInputValue.bind(this)
+        this.checkLinks = this.checkLinks.bind(this)
         this.state = {
             isOpen: false,
             isAddAppModalOpen:false,
@@ -71,6 +73,8 @@ class AppMenu extends React.Component {
                     <button className="ui primary button" onClick={()=>{
                         closeFunc()
                         this.props.addApplication(this.state.inputValue);
+                        this.props.selectApplication(this.state.inputValue)
+                        history.push(`/Log/${this.state.inputValue}`);
                     }
                     }>Ok</button>
                     <button className="ui button" onClick={()=>{
@@ -80,6 +84,14 @@ class AppMenu extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    checkLinks(links){
+        if(this.state.searchValue !== '' && links.length=== 0){
+            links.push(<div className='search notification'>No results found</div>)
+        }
+            return links;
+
     }
 
 
@@ -101,7 +113,6 @@ class AppMenu extends React.Component {
                 if(appsObject[keys[i]].length != 0){
                     const arr = appsObject[keys[i]];
                     if(this.state.searchValue != ''){
-                        links.push(<br/>);
                         let regex =new RegExp(`^${this.state.searchValue}`,'i')
                         for(let j = 0; j < appsObject[keys[i]].length; j ++){
                             let found = regex.test(arr[j])
@@ -118,10 +129,6 @@ class AppMenu extends React.Component {
                                         {arr[j]}
                                     </Link>,
                                 );
-                            }
-                            else{
-                                links.push(<div>No results found</div>)
-                                break;
                             }
                         }
                     }
@@ -177,7 +184,8 @@ class AppMenu extends React.Component {
                             <br/>
                             <div className='d-inline-block'><i className='fas fa-search'></i> &nbsp;</div>
                             <div className='d-inline-block'><input className='form-control' onChange={e=> this.setState({searchValue:e.target.value})}/></div>
-                            {links}
+                            <br/><br/>
+                            {this.checkLinks(links)}
                         </Menu>
                     </div>
                 </div>

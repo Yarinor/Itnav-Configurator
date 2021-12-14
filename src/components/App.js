@@ -9,14 +9,16 @@ import {
     saveAwConfigRecordsSet, fetchAwConfigRecords, fetchCsRecords, fetchApplications, selectApplication
 } from "../actions";
 import Header from "./Header";
-import {BrowserRouter, Route, Switch, useParams} from "react-router-dom";
+import {Router, Route, Switch, useParams} from "react-router-dom";
 import Table1 from "./LogTable";
 import CSTable from "./CSTable";
 import LogTable from "./LogTable";
 import AWConfigTable from "./AWConfigTable";
 import AppMenu from "./AppMenu";
 import Modal from "./Modal";
+import history from "../history";
 import RecordDelete from "./Pages/RecordDelete";
+import DisplayTableDropDownAction from "./DisplayTableDropDownAction";
 
 
 
@@ -132,16 +134,15 @@ class App extends React.Component {
 
                     <div className='app-wrapper'>
                         <Modal show={false}/>
-                        <BrowserRouter>
+                        <Router history={history}>
                             {/*applications={this.props.applications}*/}
                             <AppMenu />
                             <div className='page-wrapper'>
                                 <Header className='header'/>
                                 <Switch>
-                                    {/*<Route path='/records/delete' render={(props) => <RecordDelete*/}
-                                    {/*    />}/>*/}
                                     <Route path='/Log/:appName' render={(props) => <LogTable
                                         {...props}
+                                        props={props}
                                         columns={columns}
                                         records={this.props.logRecordsSet}
                                         deletedItems={this.props.logStateObject.deletedItems}
@@ -156,7 +157,6 @@ class App extends React.Component {
                                         originalData={this.props.logRecords}
                                     />}/>
                                     <Route path='/ConnectionString/:appName' render={(props) => <CSTable {...props}
-
                                                                                                          columns={columns}
                                                                                                          records={this.props.csRecordsSet}
                                                                                                          deletedItems={this.props.csStateObject.deletedItems}
@@ -189,7 +189,7 @@ class App extends React.Component {
                                 <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
                                 </button>
                             </div>
-                        </BrowserRouter>
+                        </Router>
 
                     </div>
                 </div>
@@ -227,7 +227,7 @@ const mapStateToProps = (state) => {
 const columns =
     [
         {
-            Header: 'Table Actions',
+            Header: '',
             id: 1,
             columns: [
                 {

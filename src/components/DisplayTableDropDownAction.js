@@ -2,12 +2,12 @@ import DropdownAction from "./DropDownAction";
 import {DropdownItem} from "reactstrap";
 import React from "react";
 
-const DisplayRowDropDownAction = (props) => {
+const DisplayTableDropDownAction = (props) => {
 
     return (
       <DropdownAction
-          dropDownClassName="d-inline-block"
-         btnClassName="table-btn"
+        dropDownClassName="d-inline-block"
+        btnClassName="table-btn"
         btnIcon="table-actions"
         headerIcon="blueDots"
         header="Table Actions"
@@ -15,7 +15,8 @@ const DisplayRowDropDownAction = (props) => {
         {/* Edit record */}
         <DropdownItem onClick={props.addNewRow} >
           <i className="fas fa-plus" ></i>
-          {" Add Row "}    </DropdownItem>
+          {" Add Row "}
+        </DropdownItem>
         {/* Delete record */}
         <DropdownItem onClick={props.undoChange}>
           <i className="fas fa-undo"></i>
@@ -26,4 +27,4 @@ const DisplayRowDropDownAction = (props) => {
     );
   };
 
-export default DisplayRowDropDownAction;
+export default DisplayTableDropDownAction;

@@ -1,4 +1,5 @@
 import records from "../apis/records";
+import history from "../history";
 
 import {
     UPDATE_LOG_RECORDS,

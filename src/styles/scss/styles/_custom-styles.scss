@@ -2163,7 +2163,7 @@ table {
     border: 0;
   }
 
-  td:nth-child(2) {
+  td:nth-child(1) {
     border: none;
     border-bottom: 0.5px solid;
     border-color: #dee2e6;
@@ -2188,7 +2188,7 @@ table {
       font-size: large;
       text-align: center;
 
-      th:nth-child(2) {
+      th:nth-child(1) {
         border-right: none;
 
       }
@@ -2528,6 +2528,12 @@ button, input {
   align-content: stretch;
   text-align: center;
 }
-.modal.field{
+.bm-item.search.notification{
+  text-align: center;
+}
 
+.table-header{
+  color: #2c5eb1;
+  font-size: x-large;
+  text-align: right;
 }
