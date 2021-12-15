@@ -27,3 +27,4 @@ export default combineReducers({
     selectedApplication: selectedApplicationReducer,
     form: formReducer
 });
+

@@ -2,7 +2,7 @@ import { fallDown as Menu } from 'react-burger-menu'
 import React from "react";
 import {connect} from "react-redux";
 import {
-    selectApplication, addApplication
+    selectApplication, addApplication, resetLogStateObject
 } from "../actions";
 import {Link} from "react-router-dom";
 import Modal from "./Modal";
@@ -17,6 +17,7 @@ class AppMenu extends React.Component {
         super(props);
         this.getInputValue = this.getInputValue.bind(this)
         this.checkLinks = this.checkLinks.bind(this)
+        this.checkInput =this.checkInput.bind(this)
         this.state = {
             isOpen: false,
             isAddAppModalOpen:false,
@@ -30,8 +31,10 @@ class AppMenu extends React.Component {
     ArrangeAppsAlphabetically() {
         let appsArrayObject = {A: [], B: [], C: [], D: [], E: [], F: [], G: [], H: [], I: [], J: [], K : [], L : [], M: [], N : [], O : [], P : [], Q : [], R :[] , S : [], T : [], U : [], V : [], W : [], X : [], Y : [], Z : []};
     for(let i = 0 ; i < this.props.applications.length; i++) {
-         const firstLetterOfApp = this.props.applications[i].Name.charAt(0);
-       appsArrayObject[firstLetterOfApp].push(this.props.applications[i].Name);
+         const appNameFromProps = this.props.applications[i].Name;
+         const appName = appNameFromProps.charAt(0).toUpperCase() + appNameFromProps.slice(1);
+         const firstLetterOfApp = appName.charAt(0);
+        appsArrayObject[firstLetterOfApp].push(appName);
     }
     return appsArrayObject
 }
@@ -40,6 +43,7 @@ class AppMenu extends React.Component {
      handleOnOpen() {
          document.querySelector(".bm-menu-wrap").classList.add("open-sidebar");
          document.querySelector(".page-wrapper").classList.add("page-wrapper-sidebar-open");
+         document.querySelector(".t-header-opts").classList.add("sidebar-open");
         this.setState({
             isOpen: true
         })
@@ -48,6 +52,7 @@ class AppMenu extends React.Component {
     handleOnClose () {
         document.querySelector(".bm-menu-wrap").classList.remove("open-sidebar");
         document.querySelector(".page-wrapper").classList.remove("page-wrapper-sidebar-open");
+        document.querySelector(".t-header-opts").classList.remove("sidebar-open");
         this.setState({
             isOpen: false
         })
@@ -65,16 +70,38 @@ class AppMenu extends React.Component {
     getInputValue (value) {
         this.setState({inputValue:value});
     }
+    checkInput(value,closeFunc){
+        let found =0;
+        for(let i = 0; i < this.props.applications.length ; i++){
+            if(value.toLowerCase() === this.props.applications[i].Name.toLowerCase()){
+                found=1;
+                break;
+            }
+        }
+        if(found === 1){
+            document.querySelector(".modal-error-msg").classList.add("msg-active");
+        }
+        else{
+
+            closeFunc()
+            this.props.resetLogStateObject();
+            this.props.addApplication(this.state.inputValue);
+            this.props.selectApplication(this.state.inputValue)
+            history.push(`/Log/${this.state.inputValue}`);
+            }
+        }
+
 
     renderButtonModalActions (closeFunc){
         return(
             <div>
                 <div className="actions">
                     <button className="ui primary button" onClick={()=>{
-                        closeFunc()
-                        this.props.addApplication(this.state.inputValue);
-                        this.props.selectApplication(this.state.inputValue)
-                        history.push(`/Log/${this.state.inputValue}`);
+                        // closeFunc()
+                        // this.props.addApplication(this.state.inputValue);
+                        // this.props.selectApplication(this.state.inputValue)
+                        // history.push(`/Log/${this.state.inputValue}`);
+                        this.checkInput(this.state.inputValue,closeFunc);
                     }
                     }>Ok</button>
                     <button className="ui button" onClick={()=>{
@@ -122,6 +149,7 @@ class AppMenu extends React.Component {
                                         to={`/Log/${arr[j]}`}
                                         id="home" className="menu-item"
                                         onClick={(e)=> {
+                                            this.props.resetLogStateObject();
                                             this.props.selectApplication(arr[j])
                                             this.handleOnClose();
                                         }
@@ -143,6 +171,7 @@ class AppMenu extends React.Component {
                                     to={`/Log/${arr[j]}`}
                                     id="home" className="menu-item"
                                     onClick={(e)=> {
+                                        this.props.resetLogStateObject();
                                         this.props.selectApplication(arr[j])
                                         this.handleOnClose();
                                     }
@@ -213,7 +242,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    selectApplication,addApplication
+    selectApplication,addApplication,resetLogStateObject
 })(AppMenu);
 
 

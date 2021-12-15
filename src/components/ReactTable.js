@@ -397,7 +397,7 @@ function Table(
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.column.isEditable ? cell.render('EditableCell') : cell.render('Cell')}</td>
+                                    return <td data-toggle="tooltip" title={cell.value}{...cell.getCellProps()}>{cell.column.isEditable ? cell.render('EditableCell') : cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )
@@ -1105,8 +1105,7 @@ const ReactTable = (props) => {
 
     return (
         <div>
-            <br/>
-            <div className="d-inline-block">
+            <div className="t-header-opts">
                 <div className="d-inline-block">
                     <DisplayTableDropDownAction
                         addNewRow={() => addNewRow(data)}

@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 const Modal = props =>{
     const updateInput =(e) =>{
         props.getInputValue(e.target.value)
+        document.querySelector(".modal-error-msg").classList.remove("msg-active");
 
     }
 
@@ -15,7 +16,7 @@ const Modal = props =>{
                     {props.content}
                     &nbsp;&nbsp;
                         <input id='modalInputField' class="form-control" type="text" onChange={updateInput} />
-
+                         <div className='modal-error-msg'>Error: app name already exists, it must be unqiue!</div>
                 </div>
             )
         }
