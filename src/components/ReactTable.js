@@ -550,7 +550,7 @@ const ReactTable = (props) => {
 
 
     //const [data, setData] = React.useState(props.tableRows)
-    const [originalData] = React.useState(props.originalData)
+    const originalData = logRecords;
     const [data, setData] = React.useState(getInitRecordSet())
     const [rowIndex,setRowIndex] = React.useState(null);
     //const [data, setData] = React.useState(props.tableRows)
