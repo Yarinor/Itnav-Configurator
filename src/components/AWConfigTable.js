@@ -9,8 +9,6 @@ class AWConfigTable extends React.Component {
 
     render() {
         return (
-            <div>
-
                 <ReactTable
                             tableColumns={this.props.columns}
                             tableName={'AW_CONFIG'}
@@ -25,7 +23,6 @@ class AWConfigTable extends React.Component {
                             originalData={this.props.originalData}
                             lastPageVisited={this.props.lastPageVisited}
                 />
-            </div>
         )
     }
 }

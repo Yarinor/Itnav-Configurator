@@ -11,8 +11,6 @@ class CSTable extends React.Component {
     render() {
 
             return (
-            <div>
-
                 <ReactTable
                             tableColumns={this.props.columns}
                             tableName={'CS'}
@@ -27,7 +25,7 @@ class CSTable extends React.Component {
                             originalData={this.props.originalData}
                             lastPageVisited={this.props.lastPageVisited}
                 />
-            </div>
+
         )
     }
 

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
     selectApplication, addApplication, resetLogStateObject
 } from "../actions";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Modal from "./Modal";
 import history from "../history";
 
@@ -21,8 +21,10 @@ class AppMenu extends React.Component {
         this.state = {
             isOpen: false,
             isAddAppModalOpen:false,
+            isWarnAppModalOpen:false,
             inputValue:'',
-            searchValue:''
+            searchValue:'',
+            appToNav:''
         };
     }
 
@@ -59,12 +61,20 @@ class AppMenu extends React.Component {
 
     }
 
-    handleOnModuleOpen(){
+    handleOnAddModuleOpen(){
         this.setState({isAddAppModalOpen:true});
     }
 
-    handleOnModuleClose(){
+    handleOnAddModuleClose(){
         this.setState({isAddAppModalOpen:false});
+    }
+
+    handleOnWarnModuleOpen(){
+        this.setState({isWarnAppModalOpen:true});
+    }
+
+    handleOnWarnModuleClose(){
+        this.setState({isWarnAppModalOpen:false});
     }
 
     getInputValue (value) {
@@ -87,21 +97,39 @@ class AppMenu extends React.Component {
             this.props.resetLogStateObject();
             this.props.addApplication(this.state.inputValue);
             this.props.selectApplication(this.state.inputValue)
-            history.push(`/Log/${this.state.inputValue}`);
+            history.push(`/${this.state.inputValue}/Log`);
             }
         }
 
 
-    renderButtonModalActions (closeFunc){
+    renderButtonAddModalActions (closeFunc){
         return(
             <div>
                 <div className="actions">
                     <button className="ui primary button" onClick={()=>{
-                        // closeFunc()
-                        // this.props.addApplication(this.state.inputValue);
-                        // this.props.selectApplication(this.state.inputValue)
-                        // history.push(`/Log/${this.state.inputValue}`);
                         this.checkInput(this.state.inputValue,closeFunc);
+                    }
+                    }>Ok</button>
+                    <button className="ui button" onClick={()=>{
+                        closeFunc()
+                    }
+                    }>Cancel</button>
+                </div>
+            </div>
+        )
+    }
+    renderButtonWarnModalActions (closeFunc){
+        return(
+            <div>
+                <div className="actions">
+                    <button className="ui primary button" onClick={()=>{
+                        this.props.resetLogStateObject();
+                        this.props.selectApplication(this.state.appToNav)
+                        this.handleOnClose();
+                        closeFunc();
+                        history.push(`/${this.state.appToNav}/Log`);
+                        //return <Redirect to={`/${this.state.appToNav}/Log`}/>
+
                     }
                     }>Ok</button>
                     <button className="ui button" onClick={()=>{
@@ -120,6 +148,17 @@ class AppMenu extends React.Component {
             return links;
 
     }
+
+    handleClickLink(app){
+        console.log(app);
+        this.setState({
+            isWarnAppModalOpen: true,
+            appToNav:app
+        })
+    }
+
+
+
 
 
 
@@ -149,9 +188,7 @@ class AppMenu extends React.Component {
                                         to={`/Log/${arr[j]}`}
                                         id="home" className="menu-item"
                                         onClick={(e)=> {
-                                            this.props.resetLogStateObject();
-                                            this.props.selectApplication(arr[j])
-                                            this.handleOnClose();
+                                            this.handleClickLink(arr[j]);
                                         }
                                         }>
                                         {arr[j]}
@@ -171,9 +208,8 @@ class AppMenu extends React.Component {
                                     to={`/Log/${arr[j]}`}
                                     id="home" className="menu-item"
                                     onClick={(e)=> {
-                                        this.props.resetLogStateObject();
-                                        this.props.selectApplication(arr[j])
-                                        this.handleOnClose();
+                                        e.preventDefault();
+                                        this.handleClickLink(arr[j]);
                                     }
                                     }>
                                     {arr[j]}
@@ -191,18 +227,26 @@ class AppMenu extends React.Component {
                 <div>
                 <Modal
                     show={this.state.isAddAppModalOpen}
-                    onDismiss={()=>this.handleOnModuleClose()}
+                    onDismiss={()=>this.handleOnAddModuleClose()}
                     title={"Add a new app"}
                     content={"Please enter a new app name:"}
-                    actions={this.renderButtonModalActions(()=>this.handleOnModuleClose())}
+                    actions={this.renderButtonAddModalActions(()=>this.handleOnAddModuleClose())}
                     isInputContent={true}
                     getInputValue={this.getInputValue}
                 />
+                    <Modal
+                        show={this.state.isWarnAppModalOpen}
+                        onDismiss={()=>this.handleOnWarnModuleClose()}
+                        title={"Warning"}
+                        content={"Changes may not be saved. Are you sure you want to change apps?"}
+                        actions={this.renderButtonWarnModalActions(()=>this.handleOnWarnModuleClose())}
+                        isInputContent={false}
+                    />
                     <div className='menu-outer-container'>
                         <Menu onOpen={ ()=> this.handleOnOpen() } onClose={ () => this.handleOnClose() } isOpen={this.state.isOpen} >
                                <button className='side-menu-add-button' onClick={
                                    () => {
-                                       this.handleOnModuleOpen()
+                                       this.handleOnAddModuleOpen()
                                        this.handleOnClose()
                                    }
                                } >

@@ -9,7 +9,7 @@ import {
     saveAwConfigRecordsSet, fetchAwConfigRecords, fetchCsRecords, fetchApplications, selectApplication
 } from "../actions";
 import Header from "./Header";
-import {Router, Route, Switch, useParams} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, useParams} from "react-router-dom";
 import Table1 from "./LogTable";
 import CSTable from "./CSTable";
 import LogTable from "./LogTable";
@@ -123,6 +123,12 @@ class App extends React.Component {
         console.log(LogTableFinalData);
         console.log(CsTableFinalData);
         console.log(AwConfigTableFinalData);
+        console.log(AwConfigTableFinalData);
+        console.log(AwConfigTableFinalData);
+
+
+
+
 
     }
 
@@ -130,7 +136,6 @@ class App extends React.Component {
     render() {
         if(this.props.applications.length !=0){
             return (
-                <div>
 
                     <div className='app-wrapper'>
                         <Modal show={false}/>
@@ -139,8 +144,11 @@ class App extends React.Component {
                             <AppMenu />
                             <div className='page-wrapper'>
                                 <Header className='header'/>
+                                <br/><br/>
                                 <Switch>
-                                    <Route path='/Log/:appName' render={(props) => <LogTable
+                                    <Route
+                                        path='/:appName/Log'
+                                        render={(props) => <LogTable
                                         {...props}
                                         props={props}
                                         columns={columns}
@@ -156,43 +164,47 @@ class App extends React.Component {
                                         lastPageVisited={this.props.logStateObject.lastPageVisited}
                                         originalData={this.props.logRecords}
                                     />}/>
-                                    <Route path='/ConnectionString/:appName' render={(props) => <CSTable {...props}
-                                                                                                         columns={columns}
-                                                                                                         records={this.props.csRecordsSet}
-                                                                                                         deletedItems={this.props.csStateObject.deletedItems}
-                                                                                                         addedItemsIds={this.props.csStateObject.addedItemsIds}
-                                                                                                         editedItemsIds={this.props.csStateObject.editedItemsIds}
-                                                                                                         stack={this.props.csStateObject.stack}
-                                                                                                         addedItemsIdsStack={this.props.csStateObject.addedItemsIdsStack}
-                                                                                                         editedItemsIdsStack={this.props.csStateObject.editedItemsIdsStack}
-                                                                                                         itemsDeletedStack={this.props.csStateObject.itemsDeletedStack}
-                                                                                                         actionsStack={this.props.csStateObject.actionsStack}
-                                                                                                         lastPageVisited={this.props.csStateObject.lastPageVisited}
-                                                                                                         originalData={this.props.csRecords}
+                                    <Route
+                                        path='/:appName/ConnectionString'
+                                        render={(props) => <CSTable
+                                        {...props}
+                                        columns={columns}
+                                        records={this.props.csRecordsSet}
+                                        deletedItems={this.props.csStateObject.deletedItems}
+                                        addedItemsIds={this.props.csStateObject.addedItemsIds}
+                                        editedItemsIds={this.props.csStateObject.editedItemsIds}
+                                        stack={this.props.csStateObject.stack}
+                                        addedItemsIdsStack={this.props.csStateObject.addedItemsIdsStack}
+                                        editedItemsIdsStack={this.props.csStateObject.editedItemsIdsStack}
+                                        itemsDeletedStack={this.props.csStateObject.itemsDeletedStack}
+                                        actionsStack={this.props.csStateObject.actionsStack}
+                                        lastPageVisited={this.props.csStateObject.lastPageVisited}
+                                        originalData={this.props.csRecords}
                                     />}/>
-                                    <Route path='/AppOrWebConfig/:appName' render={(props) => <AWConfigTable {...props}
+                                    <Route
+                                        path='/:appName/AppOrWebConfig'
+                                        render={(props) => <AWConfigTable
+                                        {...props}
+                                        columns={columns}
+                                        records={this.props.awConfigRecordsSet}
+                                        deletedItems={this.props.awConfigStateObject.deletedItems}
+                                        addedItemsIds={this.props.awConfigStateObject.addedItemsIds}
+                                        editedItemsIds={this.props.awConfigStateObject.editedItemsIds}
+                                        stack={this.props.awConfigStateObject.stack}
+                                        addedItemsIdsStack={this.props.awConfigStateObject.addedItemsIdsStack}
+                                        editedItemsIdsStack={this.props.awConfigStateObject.editedItemsIdsStack}
+                                        itemsDeletedStack={this.props.awConfigStateObject.itemsDeletedStack}
+                                        actionsStack={this.props.awConfigStateObject.actionsStack}
+                                        lastPageVisited={this.props.awConfigStateObject.lastPageVisited}
+                                        originalData={this.props.awConfigRecords}
+                                    />}/>
+                                </Switch >
 
-                                                                                                             columns={columns}
-                                                                                                             records={this.props.awConfigRecordsSet}
-                                                                                                             deletedItems={this.props.awConfigStateObject.deletedItems}
-                                                                                                             addedItemsIds={this.props.awConfigStateObject.addedItemsIds}
-                                                                                                             editedItemsIds={this.props.awConfigStateObject.editedItemsIds}
-                                                                                                             stack={this.props.awConfigStateObject.stack}
-                                                                                                             addedItemsIdsStack={this.props.awConfigStateObject.addedItemsIdsStack}
-                                                                                                             editedItemsIdsStack={this.props.awConfigStateObject.editedItemsIdsStack}
-                                                                                                             itemsDeletedStack={this.props.awConfigStateObject.itemsDeletedStack}
-                                                                                                             actionsStack={this.props.awConfigStateObject.actionsStack}
-                                                                                                             lastPageVisited={this.props.awConfigStateObject.lastPageVisited}
-                                                                                                             originalData={this.props.awConfigRecords}
-                                    />}/>
-                                </Switch>
                                 <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
                                 </button>
                             </div>
                         </Router>
-
                     </div>
-                </div>
 
             )
         }

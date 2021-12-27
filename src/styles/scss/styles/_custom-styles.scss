@@ -2,6 +2,8 @@
 /* get fonts from network - Open Sans Hebrew */
 /**@import url(https://fonts.googleapis.com/earlyaccess/opensanshebrew.css);*/
 
+
+
 /* get fonts locally - Open Sans Hebrew */
 @font-face {
   font-family: "Open Sans Hebrew";
@@ -26,6 +28,8 @@
   src: url("../../../assets/fonts/OpenSansHebrew-Italic.woff2") format("woff2"),
   url("../../../assets/fonts/OpenSansHebrew-Italic.woff") format("woff");
 }
+
+
 
 body {
   //direction: rtl;
@@ -1863,6 +1867,14 @@ button.link:hover span {
 
 /*-----------------------------------Yarin */
 
+html {width: 100%; height: 100%;}
+body {width: 100%; height: 100%;}
+.app-wrapper{width: 100%; height: 100%;}
+.page-wrapper{width: 100%; height: 100%;}
+.outer-table-wrapper{background-color: white }
+.table-wrapper{background-color: white;}
+#root {width: 100%; height: 100%;}
+
 //html {
 //  overflow: scroll;
 //  overflow-x: hidden;
@@ -1884,8 +1896,8 @@ button.link:hover span {
 }
 
 .ui.modal {
-  min-height: 27%;
-  width: 50%;
+  height: 200px;
+  width: 500px;
   position: relative;
   left: 0;
 
@@ -2252,11 +2264,11 @@ th {
 
 .t-header-opts{
   padding-top: 5px;
-  padding-left: 35px;
+  padding-left: 1.5%;
   transition: 0.5s;
   &.sidebar-open {
     transition: 0.5s;
-    padding-left: 20px;
+    //padding-left: 1.5%;
   }
 }
 
@@ -2394,8 +2406,8 @@ th {
 }
 
 .ui.modal {
-  height: 25%;
-  width: 30%;
+  height: 300px;
+  width: 500px;
   position: relative;
   left: 0;
 }
@@ -2454,7 +2466,6 @@ th {
 }
 
 .ui.modal>.actions {
-  background: #f9fafb;
   padding: 1rem 1rem;
   border-top: 1px solid rgba(34,36,38,.15);
   text-align: right;

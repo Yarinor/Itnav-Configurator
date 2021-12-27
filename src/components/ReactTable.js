@@ -1104,7 +1104,7 @@ const ReactTable = (props) => {
 
 
     return (
-        <div>
+        <div className="outer-table-wrapper">
             <div className="t-header-opts">
                 <div className="d-inline-block">
                     <DisplayTableDropDownAction

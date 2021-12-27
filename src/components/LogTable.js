@@ -12,10 +12,9 @@ class LogTable extends React.Component {
 
 
     render() {
+        console.log('hmmmm');
             // const tableData = buildTableData(this.props.records);
             return (
-                <div>
-
                     <ReactTable
                                 props={this.props.props}
                                tableColumns={this.props.columns}
@@ -31,7 +30,6 @@ class LogTable extends React.Component {
                                 originalData={this.props.originalData}
                                 lastPageVisited={this.props.lastPageVisited}
                     />
-                </div>
             )
         }
 

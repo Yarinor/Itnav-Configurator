@@ -20,7 +20,7 @@ class Header extends React.Component {
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </React.Fragment>
                     <div className="item">
-                        <Link className="logo" to ={`/Log/${this.props.selectedApplication}`} >
+                        <Link className="logo" to ={`/${this.props.selectedApplication}/Log`} >
                             ITNAV-Configurator
                         </Link>
                     </div>
@@ -29,17 +29,17 @@ class Header extends React.Component {
 
                     </React.Fragment>
                     <div className="item">
-                        <Link className="link" to ={`/Log/${this.props.selectedApplication}`} >
+                        <Link className="link" to ={`/${this.props.selectedApplication}/Log`} >
                             Log |
                         </Link>
                     </div>
                     <div className="item">
-                        <Link className="link" to={`/ConnectionString/${this.props.selectedApplication}`} >
+                        <Link className="link" to={`/${this.props.selectedApplication}/ConnectionString`} >
                             Connection String |
                         </Link>
                     </div>
                     <div className="item">
-                        <Link className="link" to={`/AppOrWebConfig/${this.props.selectedApplication}`} c>
+                        <Link className="link" to={`/${this.props.selectedApplication}/AppOrWebConfig`} c>
                             App/WebConfig
                         </Link>
                     </div>
