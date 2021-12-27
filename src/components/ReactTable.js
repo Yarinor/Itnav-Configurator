@@ -485,7 +485,6 @@ function Table(
 }
 
 const ReactTable = (props) => {
-    console.log(props);
     const columns = React.useMemo(
         () => props.tableColumns,
         []

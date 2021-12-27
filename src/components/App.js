@@ -6,7 +6,7 @@ import {
     saveCsRecordsSet,
     updateLogStateObject,
     updateCsStateObject,
-    saveAwConfigRecordsSet, fetchAwConfigRecords, fetchCsRecords, fetchApplications, selectApplication
+    saveAwConfigRecordsSet, fetchAwConfigRecords, fetchCsRecords, fetchApplications, selectApplication, postLogRecords
 } from "../actions";
 import Header from "./Header";
 import {BrowserRouter as Router, Route, Switch, useParams} from "react-router-dom";
@@ -106,6 +106,10 @@ class App extends React.Component {
         let dataForDb = newDeletedItemsArr;
         dataForDb = dataForDb.concat(data);
 
+        dataForDb.map(element => (
+                delete element["editButton"], delete element["isEditing"]
+            )
+        );
         dataForDb = dataForDb.sort(function (a, b) {
             return a.Id - b.Id;
         });
@@ -120,15 +124,10 @@ class App extends React.Component {
         const LogTableFinalData = this.prepareDataForDb(this.props.logRecordsSet, this.props.logStateObject.deletedItems, this.props.logStateObject.editedItemsIds);
         const CsTableFinalData = this.prepareDataForDb(this.props.csRecordsSet, this.props.csStateObject.deletedItems, this.props.csStateObject.editedItemsIds);
         const AwConfigTableFinalData = this.prepareDataForDb(this.props.awConfigRecordsSet, this.props.awConfigStateObject.deletedItems, this.props.awConfigStateObject.editedItemsIds);
+        this.props.postLogRecords(this.props.selectedApplication,LogTableFinalData);
         console.log(LogTableFinalData);
         console.log(CsTableFinalData);
         console.log(AwConfigTableFinalData);
-        console.log(AwConfigTableFinalData);
-        console.log(AwConfigTableFinalData);
-
-
-
-
 
     }
 
@@ -312,7 +311,8 @@ export default connect(mapStateToProps, {
     saveLogRecordsSet,
     saveAwConfigRecordsSet,
     fetchApplications,
-    selectApplication
+    selectApplication,
+    postLogRecords
 })(App);
 
 

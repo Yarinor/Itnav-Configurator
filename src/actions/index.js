@@ -48,6 +48,11 @@ export const fetchLogRecords = (appName) => async (dispatch) => {
     dispatch({type: FETCH_LOG_RECORDS, payload: buildRows(JSON.parse(response.data))})
 }
 
+export const postLogRecords = (appName,data) => async (dispatch) => {
+ const response = await records.post(`applications/${appName}/Log`,data);
+ console.log(response);
+}
+
 export const fetchCsRecords = (appName) => async (dispatch) => {
     const response = await records.get(`/applications/${appName}/ConnectionString`);
     //const response = await records.get('/records');
