@@ -15,7 +15,12 @@ import {
     UPDATE_AW_CONFIG_STATE_OBJECT,
     FETCH_CS_RECORDS,
     FETCH_AW_CONFIG_RECORDS,
-    FETCH_APPLICATIONS, SELECT_APPLICATION, ADD_APPLICATION, RESET_LOG_STATE_OBJECT
+    FETCH_APPLICATIONS,
+    SELECT_APPLICATION,
+    ADD_APPLICATION,
+    RESET_LOG_STATE_OBJECT,
+    RESET_AW_CONFIG_STATE_OBJECT,
+    RESET_CS_STATE_OBJECT
 
 } from "./types";
 import _ from "lodash";
@@ -122,7 +127,18 @@ export const updateLogStateObject = object => {
 }
 export const resetLogStateObject = ()=> {
     return {
-        type: RESET_LOG_STATE_OBJECT,
+        type: RESET_LOG_STATE_OBJECT
+    }
+}
+export const resetCsStateObject = ()=> {
+    return {
+        type: RESET_CS_STATE_OBJECT
+    }
+}
+
+export const resetAwConfigStateObject = ()=> {
+    return {
+        type: RESET_AW_CONFIG_STATE_OBJECT
     }
 }
 

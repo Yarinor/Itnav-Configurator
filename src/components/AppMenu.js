@@ -2,7 +2,7 @@ import { fallDown as Menu } from 'react-burger-menu'
 import React from "react";
 import {connect} from "react-redux";
 import {
-    selectApplication, addApplication, resetLogStateObject
+    selectApplication, addApplication, resetLogStateObject, resetCsStateObject, resetAwConfigStateObject
 } from "../actions";
 import {Link, Redirect} from "react-router-dom";
 import Modal from "./Modal";
@@ -45,7 +45,7 @@ class AppMenu extends React.Component {
      handleOnOpen() {
          document.querySelector(".bm-menu-wrap").classList.add("open-sidebar");
          document.querySelector(".page-wrapper").classList.add("page-wrapper-sidebar-open");
-         document.querySelector(".t-header-opts").classList.add("sidebar-open");
+        // document.querySelector(".t-header-opts").classList.add("sidebar-open");
         this.setState({
             isOpen: true
         })
@@ -54,7 +54,7 @@ class AppMenu extends React.Component {
     handleOnClose () {
         document.querySelector(".bm-menu-wrap").classList.remove("open-sidebar");
         document.querySelector(".page-wrapper").classList.remove("page-wrapper-sidebar-open");
-        document.querySelector(".t-header-opts").classList.remove("sidebar-open");
+        //document.querySelector(".t-header-opts").classList.remove("sidebar-open");
         this.setState({
             isOpen: false
         })
@@ -95,6 +95,8 @@ class AppMenu extends React.Component {
 
             closeFunc()
             this.props.resetLogStateObject();
+            this.props.resetCsStateObject();
+            this.props.resetAwConfigStateObject();
             this.props.addApplication(this.state.inputValue);
             this.props.selectApplication(this.state.inputValue)
             history.push(`/${this.state.inputValue}/Log`);
@@ -124,6 +126,8 @@ class AppMenu extends React.Component {
                 <div className="actions">
                     <button className="ui primary button" onClick={()=>{
                         this.props.resetLogStateObject();
+                        this.props.resetCsStateObject();
+                        this.props.resetAwConfigStateObject();
                         this.props.selectApplication(this.state.appToNav)
                         this.handleOnClose();
                         closeFunc();
@@ -134,6 +138,7 @@ class AppMenu extends React.Component {
                     }>Ok</button>
                     <button className="ui button" onClick={()=>{
                         closeFunc()
+                        this.handleOnClose();
                     }
                     }>Cancel</button>
                 </div>
@@ -188,6 +193,7 @@ class AppMenu extends React.Component {
                                         to={`/Log/${arr[j]}`}
                                         id="home" className="menu-item"
                                         onClick={(e)=> {
+                                            e.preventDefault();
                                             this.handleClickLink(arr[j]);
                                         }
                                         }>
@@ -286,7 +292,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    selectApplication,addApplication,resetLogStateObject
+    selectApplication,addApplication,resetLogStateObject,resetCsStateObject,resetAwConfigStateObject
 })(AppMenu);
 
 

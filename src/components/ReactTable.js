@@ -123,12 +123,6 @@ const EditableCell = ({
     }
 
 
-    // // We'll only update the external data when the input is blurred
-    // const onBlur = () => {
-    //     updateMyData(index, id, value)
-    //
-    // }
-
     let retObj = null;
     if (original.isEditing) {
         switch (index) {
@@ -150,6 +144,7 @@ const EditableCell = ({
         setValue(initialValue)
     }, [initialValue])
 
+    //if Cancel is clicked we want to return to the initial value
     React.useEffect(() => {
         if (isCancelClicked) {
             setValue(initialValue)
@@ -157,6 +152,7 @@ const EditableCell = ({
         }
     }, [isCancelClicked])
 
+    // if save is clicked we want to update our stack and also our data
     React.useEffect(() => {
         if (isSavedClicked) {
             setIsStackUpdate(true);
@@ -166,17 +162,14 @@ const EditableCell = ({
         }
     }, [isSavedClicked])
 
-
+   // we return the appropriate rendered object for our cell
     return retObj
 }
 
 
-const Header = () => {
-    return <div>id</div>
-}
 
 
-// Set our editable cell renderer as the default Cell renderer
+// Set our editable cell and Cell renderer as the default Cell renderer
 const defaultColumn = {
     EditableCell: EditableCell,
     Cell: Cell,
@@ -215,7 +208,6 @@ function Table(
         setIsUndoClicked,
         setIsAddRowClicked,
         setStack,
-        getPageSize,
         undoChange,
         setIsCancelClicked,
         setIsFirstUndo,
@@ -253,6 +245,10 @@ function Table(
             defaultColumn,
             // use the skipPageReset option to disable page resetting temporarily
             autoResetPage: !skipPageReset,
+
+            //These flags are used to trigger our useEffect functions when they change their values
+            //We need them
+            // so our app will know what to do when different functions are triggered
             isSavedClicked,
             isEditClicked,
             isCancelClicked,
@@ -276,7 +272,6 @@ function Table(
             handleClickSaveEditRow,
             handleClickDeleteRow,
             resetClickFlags,
-            getPageSize,
             setisPageCountChanged,
             setIsSavedClicked,
             setIsDeleteClicked,
@@ -295,24 +290,14 @@ function Table(
         },
         usePagination
     )
-    // getPageSize(pageSize);
-    let newStack;
-    // React.useEffect(() => {
-    //     if(isFirstUndo === true){
-    //         for(let i=0; i< pageOptions.length; i++){
-    //             nextPage();
-    //             setIsFirstUndo(false);
-    //     }
-    //     }
-    // }, [isFirstUndo])
-    //
-    // React.useEffect(() => {
-    //     if(isPageCountChanged){
-    //         setisPageCountChanged(false);
-    //     }
-    // }, [isPageCountChanged])
 
+
+ // The use effect function is used for Rendering the component
+
+ // Here we trigger an update function for our undo stack.
+ //This way our stack will always be updated with the last data object in our app
     React.useEffect(() => {
+        let newStack;
         if (isStackUpdate) {
             const dataCopy = [...data]
             stack.push(dataCopy);
@@ -324,11 +309,13 @@ function Table(
         }
     }, [isStackUpdate])
 
+    //When the save button is clicked we want to keep the user in the page which was last visited
     React.useEffect(() => {
         gotoPage(pageIndex);
         setIsSavedClicked(false);
     }, [isSavedClicked])
 
+    //When we add a row we want to be in the last page so the user can see where the new row was added
     React.useEffect(() => {
         if(isAddRowClicked === true){
             for (let i = 0; i < pageOptions.length; i++) {
@@ -340,44 +327,33 @@ function Table(
         setIsAddRowClicked(false);
     }, [isAddRowClicked])
 
-
+//When undo,cancel,edit,delete is clicked and when the app is first rendered we want the user to stay in the last page which was visited
     React.useEffect(() => {
         gotoPage(lastPageVisited);
         setIsUndoClicked(false);
     }, [isUndoClicked])
-
     React.useEffect(() => {
         gotoPage(lastPageVisited);
         setIsCancelClicked(false);
     }, [isCancelClicked])
-
     React.useEffect(() => {
         gotoPage(lastPageVisited);
         setIsEditClicked(false);
     }, [isEditClicked])
-
     React.useEffect(() => {
         gotoPage(pageIndex);
         setIsDeleteClicked(false);
     }, [isDeleteClicked])
-
-
-
 
     React.useEffect(() => {
         gotoPage(lastPageVisited);
     }, [])
 
     React.useEffect(() => {
-        // for (let i = 0; i < pageOptions.length; i++) {
-        //     nextPage();
-        // }
-        // setLastPageVisited(pageIndex);
-        // updateToStateObject(LAST_PAGE_VISITED, pageIndex)
     }, [data.length])
 
 
-    // Render the UI for your table
+    // Render the UI for our table
     return (
         <>
             <div className='table-wrapper'>
@@ -485,20 +461,13 @@ function Table(
 }
 
 const ReactTable = (props) => {
+    // we use Memo as recommended by React table
     const columns = React.useMemo(
         () => props.tableColumns,
         []
     )
-    //const columns =props.tableColumns;
-    // const rows = React.useMemo(
-    //     () => props.tableRows,
-    //     [props.appName]
-    // )
-
-    // const columns =props.tableColumns;
+    // we initialize our variables with the values coming from redux state
     const appName = useSelector(state => state.selectedApplication);
-    //const { appName } = useParams();
-    // const appName= this.props.appName
     const logRecords = useSelector(state => state.logRecords);
     const logRecordsSet = useSelector(state => state.logRecordsSet);
     const csRecords = useSelector(state => state.csRecords);
@@ -507,9 +476,8 @@ const ReactTable = (props) => {
     const awConfigRecordsSet = useSelector(state => state.awConfigRecordsSet);
     const tableName = props.tableName;
 
-
+    //Depends on the kind of table we are on, we return the appropriate recordSet
     const getInitRecordSet = () => {
-        let data;
         switch (tableName) {
             case 'Log': {
                 return logRecordsSet
@@ -528,36 +496,36 @@ const ReactTable = (props) => {
 
         }
     }
-    // const buildHeaderOptions =()=>{
-    //     props.tableColumns[0].Header = (data) => {
-    //         return (
-    //             <div className="d-inline-block">
-    //                 <div className="d-inline-block">
-    //                     <DisplayTableDropDownAction
-    //                         addNewRow={() => addNewRow(data.data)}
-    //                         undoChange={() => undoChange(stack, data.data)}
-    //                     />
-    //                 </div>
-    //                 <div className="d-inline-block"><span>Table Actions</span></div>
-    //             </div>
-    //
-    //
-    //         )
-    //
-    //     }
-    // }
+    //Depends on the kind of table we are on, we return the appropriate Record
+    const getInitRecords = () =>{
+        switch (tableName) {
+            case 'Log': {
+                return logRecords
+                break;
+            }
+            case 'CS': {
+                return csRecords
+                break;
+            }
+            case 'AW_CONFIG': {
+                return awConfigRecords
+                break;
+            }
+            default:
+                break;
+
+        }
+    }
 
 
-    //const [data, setData] = React.useState(props.tableRows)
-    const originalData = logRecords;
+
+
+    const originalData = getInitRecords();
     const [data, setData] = React.useState(getInitRecordSet())
+
+    // Local state variable
     const [rowIndex,setRowIndex] = React.useState(null);
-    //const [data, setData] = React.useState(props.tableRows)
-
-
     const [skipPageReset, setSkipPageReset] = React.useState(false)
-
-    const [applicationName, setApplicationName] = React.useState(appName);
     const [isSavedClicked, setIsSavedClicked] = React.useState(false)
     const [isEditClicked, setIsEditClicked] = React.useState(false)
     const [isCancelClicked, setIsCancelClicked] = React.useState(false)
@@ -568,14 +536,10 @@ const ReactTable = (props) => {
     const [isStackUpdate, setIsStackUpdate] = React.useState(false)
     const [isFirstUndo, setIsFirstUndo] = React.useState(false)
     const[isDeleteModalOpen,setIsDeleteModalOpen] = React.useState(false);
-
-
     const [lastPageVisited, setLastPageVisited] = React.useState(props.lastPageVisited);
     const [deletedItems, setDeletedItems] = React.useState(props.deletedItems)
     const [addedItemsIds, setAddedItemsIds] = React.useState(props.addedItemsIds)
     const [editedItemsIds, setEditedItemsIds] = React.useState(props.editedItemsIds)
-
-
     const [stack, setStack] = React.useState(props.stack)
     const [addedItemsIdsStack, setAddedItemsIdsStack] = React.useState(props.addedItemsIdsStack)
     const [editedItemsIdsStack, setEditedItemsIdsStack] = React.useState(props.editedItemsIdsStack)
@@ -585,51 +549,11 @@ const ReactTable = (props) => {
     let pageSizeFromChild;
 ;
 
+// We have to define the dispatch hook in order to dispatch our action creators
     const dispatch = useDispatch()
-    //buildHeaderOptions();
 
 
-    // console.log('===========================================================')
-    // console.log('data');
-    // console.log(data);
-    // console.log('appName');
-    // console.log(appName);
-    // console.log('addedItemsIds');
-    // console.log(addedItemsIds);
-    // console.log('editedItemsIds');
-    // console.log(editedItemsIds);
-    // console.log('itemsDeleted');
-    // console.log(deletedItems);
-    //
-    // console.log('***********************************************************')
-    // console.log('actionsStack');
-    // console.log(actionsStack);
-    // console.log('addedItemsIdsStack');
-    // console.log(addedItemsIdsStack);
-    // console.log('editedItemsIdsStack');
-    // console.log(editedItemsIdsStack);
-    // console.log('itemsDeletedStack');
-    // console.log(itemsDeletedStack);
-
-
-    // props.tableColumns[0].Header = (data) => {
-    //     return (
-    //         <div className="d-inline-block">
-    //             <div className="d-inline-block">
-    //                 <DisplayTableDropDownAction
-    //                     addNewRow={() => addNewRow(data.data)}
-    //                     undoChange={() => undoChange(stack, data.data)}
-    //                 />
-    //             </div>
-    //             <div className="d-inline-block"><span>Table Actions</span></div>
-    //         </div>
-    //
-    //
-    //     )
-    //
-    // }
-
-
+// Updates our stateObject according to the table we are on
     const updateToStateObject = (key, value) => {
         switch (tableName) {
             case 'Log': {
@@ -650,6 +574,8 @@ const ReactTable = (props) => {
         }
     }
 
+    // When we need to get our Records according to the table and app we are on
+    //We call the appropriate action creator
     const getRecordsData = () => {
         switch (tableName) {
             case 'Log': {
@@ -670,9 +596,8 @@ const ReactTable = (props) => {
         }
     }
 
+    //When we add, edit or delete row this function updates our recordSet
     const updateToState = (value, action) => {
-
-
         switch (tableName) {
             case 'Log': {
                 if (action === SAVE) {
@@ -734,7 +659,7 @@ const ReactTable = (props) => {
         setIsCancelClicked(true);
         updateToState(data, SAVE);
     }
-
+//This is the event handler we pass to our table in order for us to control what our Delete button does
     const handleClickDeleteRow = (rowIndex, data) => {
 
 
@@ -768,11 +693,14 @@ const ReactTable = (props) => {
 
     }
 
-    const openDeleteModal = (rowIndex,data)=>{
+    // function that activate the delete modal
+    const openDeleteModal = ()=>{
         setIsDeleteModalOpen(true);
 
     }
-    const handleClickSaveEditRow = (data, rowIndex, id, value, isSavedClicked) => {
+    //This is the event handler we pass to our table in order for us to control what our Save button does
+    const handleClickSaveEditRow = (data, rowIndex) => {
+
         actionsStack.push('2');
         setActionStack(actionsStack);
         updateToStateObject(ACTIONS_STACK, actionsStack);
@@ -796,6 +724,8 @@ const ReactTable = (props) => {
 
 
     }
+
+    // A Function that resets our flags from true to false
     const resetFlags = () => {
         setIsCancelClicked(false);
         setIsSavedClicked(false);
@@ -803,11 +733,8 @@ const ReactTable = (props) => {
     }
 
 
-    const getPageSize = (pageSize) => {
-        pageSizeFromChild = pageSize;
 
-    }
-
+    // A function that compares our arrays
     const arrayCompare = (arr1, arr2) => {
         for (let i = 0; i < arr1.length; i++) {
             if (arr1[i] !== arr2[i]) {
@@ -818,6 +745,7 @@ const ReactTable = (props) => {
         return true;
     }
 
+    //A function that pops out the last array in the unto stack and updates our data with it
     const undoChange = (stack, data) => {
         const lastAction = actionsStack.pop();
         switch (lastAction) {
@@ -875,7 +803,7 @@ const ReactTable = (props) => {
         setIsUndoClicked(true)
     }
 
-
+      // A function that adds a new row to the table
       const addNewRow = (data) => {
         actionsStack.push('1');
         setActionStack(actionsStack);
@@ -914,8 +842,6 @@ const ReactTable = (props) => {
                 window.scrollTo({
                     top: document.documentElement.scrollHeight,
                     behavior: 'auto'
-                    /* you can also use 'auto' behaviour
-                       in place of 'smooth' */
 
                 });
             }
@@ -938,7 +864,6 @@ const ReactTable = (props) => {
                 editButton: "edit",
                 isEditing: false
             })
-            const arrLastIndex = data.length;
             setIsStackUpdate(true);
             setData(newData);
             updateToState(newData, SAVE)
@@ -951,6 +876,7 @@ const ReactTable = (props) => {
         }
 
     }
+    // renders the buttons for our delete modal
     const renderButtonModalActions = () =>{
         return(
             <div className="actions">
@@ -977,15 +903,7 @@ const ReactTable = (props) => {
     const updateMyData = (rowIndex, columnId, value) => {
         // We also turn on the flag to not reset the page
         setSkipPageReset(true)
-        // updateToState(old => old.map((row, index) => {
-        //     if (index === rowIndex) {
-        //         return {
-        //             ...old[rowIndex],
-        //             [columnId]: value,
-        //         }
-        //     }
-        //     return row
-        // }),SAVE)
+
         setData(old =>
             old.map((row, index) => {
 
@@ -1006,14 +924,7 @@ const ReactTable = (props) => {
     // so that if data actually changes when we're not
     // editing it, the page is reset
 
-    function sleep(milliseconds) {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds) {
-                break;
-            }
-        }
-    }
+
 
     const compareArrays = (array1, array2) => {
         if (JSON.stringify(array1) === JSON.stringify(array2)) {
@@ -1025,8 +936,7 @@ const ReactTable = (props) => {
     }
 
 
-
-
+// When appName changes we need to get the record data. We dont get the records if RecordSet was changed
     React.useEffect(() => {
         if (tableName === 'Log')
             if (compareArrays(logRecords, logRecordsSet) === true) {
@@ -1037,45 +947,40 @@ const ReactTable = (props) => {
     }, [appName])
 
 
+    //Any time data changes we update our state
     React.useEffect(() => {
         updateToState(data, SAVE);
         setSkipPageReset(false)
 
     }, [data])
 
+
+
+//     React.useEffect(() => {
+//         if (compareArrays(logRecords, logRecordsSet) === true)
+//             dispatch(saveLogRecordsSet(logRecords))
+//     }, [logRecords])
     // React.useEffect(() => {
-    //     setData(props.tableRows)
-    // }, [props.appName])
+    //     if (compareArrays(csRecords, csRecordsSet) === true)
+    //         dispatch(saveCsRecordsSet(csRecords))
+    // }, [csRecords])
+    // React.useEffect(() => {
+    //     if (compareArrays(awConfigRecords, awConfigRecordsSet) === true)
+    //         dispatch(saveAwConfigRecordsSet(awConfigRecords))
+    // }, [awConfigRecords])
 
-
+    // If the RecordsSet changes we want to update our table data with the new values
     React.useEffect(() => {
-
-        if (compareArrays(logRecords, logRecordsSet) === true)
-            dispatch(saveLogRecordsSet(logRecords))
-    }, [logRecords])
-
-    React.useEffect(() => {
-        //compareArrays(logRecords,logRecordsSet)===true &&
         if (tableName === 'Log' && compareArrays(data, logRecordsSet) === false)
             setData(logRecordsSet)
     }, [logRecordsSet])
 
 
     React.useEffect(() => {
-        if (compareArrays(csRecords, csRecordsSet) === true)
-            dispatch(saveCsRecordsSet(csRecords))
-    }, [csRecords])
-
-    React.useEffect(() => {
         if (tableName === 'CS' && compareArrays(data, csRecordsSet) === false)
             setData(csRecordsSet)
     }, [csRecordsSet])
 
-
-    React.useEffect(() => {
-        if (compareArrays(awConfigRecords, awConfigRecordsSet) === true)
-            dispatch(saveAwConfigRecordsSet(awConfigRecords))
-    }, [awConfigRecords])
 
     React.useEffect(() => {
         if (tableName === 'AW_CONFIG' && compareArrays(data, awConfigRecordsSet) === false)
@@ -1096,10 +1001,6 @@ const ReactTable = (props) => {
         });
     }, [])
 
-
-    // Let's add a data resetter/randomizer to help
-    // illustrate that flow...
-    const resetData = () => setData(originalData)
 
 
     return (
@@ -1122,7 +1023,6 @@ const ReactTable = (props) => {
 
             />
             <Table
-                getPageSize={getPageSize}
                 columns={columns}
                 data={data}
                 stack={stack}
@@ -1166,6 +1066,7 @@ const ReactTable = (props) => {
 
     )
 }
+
 
 
 
