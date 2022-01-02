@@ -2,8 +2,6 @@ import {
     RESET_LOG_STATE_OBJECT,
     UPDATE_CS_STATE_OBJECT, UPDATE_LOG_STATE_OBJECT
 } from "../actions/types";
-import _ from "lodash";
-import {ACTIONS_STACK} from "../components/types";
 
 
 const logStateObjectReducer = (

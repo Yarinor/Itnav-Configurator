@@ -1,8 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
 import ReactTable from "./ReactTable";
-import {fetchLogRecords} from "../actions";
-import _ from "lodash";
 
 
 

@@ -3,7 +3,6 @@ import {
     ADD_APPLICATION,
     FETCH_APPLICATIONS
 } from "../actions/types";
-import {toJSON} from "lodash/seq";
 
 const applicationReducer = (state= {}, action) =>{
     switch(action.type){

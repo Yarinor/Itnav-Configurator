@@ -2,7 +2,7 @@ import {
     SAVE_LOG_RECORDS_SET,
     DELETE_FROM_LOG_RECORDS_SET,
 } from "../actions/types";
-import _ from "lodash";
+
 
 
 
@@ -11,8 +11,7 @@ const logRecordsSetReducer =(state = {}, action) =>{
     switch (action.type){
         case SAVE_LOG_RECORDS_SET:
         {
-            // console.log(action.payload);
-            //return {...state,..._.mapKeys(action.payload, 'Id')};
+
             return action.payload
         }
         case DELETE_FROM_LOG_RECORDS_SET:

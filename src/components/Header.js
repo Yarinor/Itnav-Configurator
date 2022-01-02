@@ -7,10 +7,6 @@ import {selectApplication} from "../actions";
 
 class Header extends React.Component {
 
-    // componentDidMount() {
-    //     console.log(this.props.match.params.appName)
-    // }
-
     render(){
         return (
             <div className="header">

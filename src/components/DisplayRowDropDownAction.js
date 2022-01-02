@@ -1,6 +1,5 @@
 import DropdownAction from "./DropDownAction";
 import {DropdownItem} from "reactstrap";
-import Modal from "./Modal";
 import React from "react";
 
 const DisplayRowDropDownAction = (props) => {

@@ -1,8 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
 import ReactTable from "./ReactTable";
-import {saveAwConfigRecordsSet} from "../actions";
-import _ from "lodash";
+
 
 
 class AWConfigTable extends React.Component {

@@ -4,40 +4,25 @@ import {
     fetchLogRecords,
     saveLogRecordsSet,
     saveCsRecordsSet,
-    updateLogStateObject,
-    updateCsStateObject,
-    saveAwConfigRecordsSet, fetchAwConfigRecords, fetchCsRecords, fetchApplications, selectApplication, postLogRecords
+    saveAwConfigRecordsSet,
+    fetchAwConfigRecords,
+    fetchCsRecords,
+    fetchApplications,
+    selectApplication,
+    postLogRecords
 } from "../actions";
 import Header from "./Header";
-import {BrowserRouter as Router, Route, Switch, useParams} from "react-router-dom";
-import Table1 from "./LogTable";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import CSTable from "./CSTable";
 import LogTable from "./LogTable";
 import AWConfigTable from "./AWConfigTable";
 import AppMenu from "./AppMenu";
 import Modal from "./Modal";
 import history from "../history";
-import RecordDelete from "./Pages/RecordDelete";
-import DisplayTableDropDownAction from "./DisplayTableDropDownAction";
-
-
-
-
 
 
 class App extends React.Component {
 
-
-    shouldComponentUpdate(nextProps) {
-        // Rendering the component only if
-        // passed props value is changed
-
-        if (nextProps.selectedApplication !== this.props.selectedApplication) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
@@ -81,14 +66,6 @@ class App extends React.Component {
     }
 
 
-    // shouldComponentUpdate(nextProps) {
-    //     if(nextProps.value !== this.props.logRecordsSet || nextProps.value !== this.props.csRecordsSet){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
     prepareDataForDb = (data, deletedItems, editedItemsIds) => {
         let newDeletedItemsArr;
         newDeletedItemsArr = deletedItems.map((row) =>
@@ -124,7 +101,7 @@ class App extends React.Component {
         const LogTableFinalData = this.prepareDataForDb(this.props.logRecordsSet, this.props.logStateObject.deletedItems, this.props.logStateObject.editedItemsIds);
         const CsTableFinalData = this.prepareDataForDb(this.props.csRecordsSet, this.props.csStateObject.deletedItems, this.props.csStateObject.editedItemsIds);
         const AwConfigTableFinalData = this.prepareDataForDb(this.props.awConfigRecordsSet, this.props.awConfigStateObject.deletedItems, this.props.awConfigStateObject.editedItemsIds);
-        this.props.postLogRecords(this.props.selectedApplication,LogTableFinalData);
+        this.props.postLogRecords(this.props.selectedApplication, LogTableFinalData);
         console.log(LogTableFinalData);
         console.log(CsTableFinalData);
         console.log(AwConfigTableFinalData);
@@ -133,21 +110,21 @@ class App extends React.Component {
 
 
     render() {
-        if(this.props.applications.length !=0){
+        if (this.props.applications.length != 0) {
             return (
 
-                    <div className='app-wrapper'>
-                        <Modal show={false}/>
-                        <Router history={history}>
-                            {/*applications={this.props.applications}*/}
-                            <AppMenu />
-                            <div className='page-wrapper'>
-                                <Header className='header'/>
-                                <br/><br/>
-                                <Switch>
-                                    <Route
-                                        path='/:appName/Log'
-                                        render={(props) => <LogTable
+                <div className='app-wrapper'>
+                    <Modal show={false}/>
+                    <Router history={history}>
+                        {/*applications={this.props.applications}*/}
+                        <AppMenu/>
+                        <div className='page-wrapper'>
+                            <Header className='header'/>
+                            <br/><br/>
+                            <Switch>
+                                <Route
+                                    path='/:appName/Log'
+                                    render={(props) => <LogTable
                                         {...props}
                                         props={props}
                                         columns={columns}
@@ -163,9 +140,9 @@ class App extends React.Component {
                                         lastPageVisited={this.props.logStateObject.lastPageVisited}
                                         originalData={this.props.logRecords}
                                     />}/>
-                                    <Route
-                                        path='/:appName/ConnectionString'
-                                        render={(props) => <CSTable
+                                <Route
+                                    path='/:appName/ConnectionString'
+                                    render={(props) => <CSTable
                                         {...props}
                                         columns={columns}
                                         records={this.props.csRecordsSet}
@@ -180,9 +157,9 @@ class App extends React.Component {
                                         lastPageVisited={this.props.csStateObject.lastPageVisited}
                                         originalData={this.props.csRecords}
                                     />}/>
-                                    <Route
-                                        path='/:appName/AppOrWebConfig'
-                                        render={(props) => <AWConfigTable
+                                <Route
+                                    path='/:appName/AppOrWebConfig'
+                                    render={(props) => <AWConfigTable
                                         {...props}
                                         columns={columns}
                                         records={this.props.awConfigRecordsSet}
@@ -197,17 +174,16 @@ class App extends React.Component {
                                         lastPageVisited={this.props.awConfigStateObject.lastPageVisited}
                                         originalData={this.props.awConfigRecords}
                                     />}/>
-                                </Switch >
+                            </Switch>
 
-                                <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
-                                </button>
-                            </div>
-                        </Router>
-                    </div>
+                            <button className='btn btn-primary save-button' onClick={() => this.finalizeData()}>Save
+                            </button>
+                        </div>
+                    </Router>
+                </div>
 
             )
-        }
-        else{
+        } else {
             return <div>Loading...</div>
         }
 
