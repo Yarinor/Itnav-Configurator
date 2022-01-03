@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {
   Dropdown,
   DropdownToggle,
@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 /**
  * Reusable component for drop down menus
  */
-export default class DropdownAction extends Component {
+export default class DropdownAction extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

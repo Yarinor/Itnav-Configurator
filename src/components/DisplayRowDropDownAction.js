@@ -31,4 +31,4 @@ const DisplayRowDropDownAction = (props) => {
     );
   };
 
-export default DisplayRowDropDownAction;
+export default React.memo(DisplayRowDropDownAction);

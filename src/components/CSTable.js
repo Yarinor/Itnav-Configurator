@@ -3,7 +3,7 @@ import ReactTable from "./ReactTable";
 
 
 
-class CSTable extends React.Component {
+class CSTable extends React.PureComponent {
 
     render() {
 

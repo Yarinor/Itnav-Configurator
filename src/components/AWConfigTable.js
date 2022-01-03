@@ -3,7 +3,7 @@ import ReactTable from "./ReactTable";
 
 
 
-class AWConfigTable extends React.Component {
+class AWConfigTable extends React.PureComponent {
 
     render() {
         return (

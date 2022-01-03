@@ -1070,5 +1070,5 @@ const ReactTable = (props) => {
 
 
 
-export default ReactTable;
+export default React.memo(ReactTable);
 

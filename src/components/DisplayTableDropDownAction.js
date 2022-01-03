@@ -27,4 +27,4 @@ const DisplayTableDropDownAction = (props) => {
     );
   };
 
-export default DisplayTableDropDownAction;
+export default React.memo(DisplayTableDropDownAction);

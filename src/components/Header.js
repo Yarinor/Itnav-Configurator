@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {selectApplication} from "../actions";
 
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
 
     render(){
         return (

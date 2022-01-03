@@ -3,7 +3,7 @@ import ReactTable from "./ReactTable";
 
 
 
-class LogTable extends React.Component {
+class LogTable extends React.PureComponent {
 
 
 
